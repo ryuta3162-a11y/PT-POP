@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>パーソナルトレーニング 販促POP（A4縦）</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* ロゴ実測の赤のみ（アクセント統一） */
+      --red: #a5354b;
+      --black: #111111;
+      --grey-1: #2a2a2e;
+      --grey-2: #5c5c64;
+      --grey-3: #a0a0a8;
+      --grey-4: #d4d4d8;
+      --grey-bg: #f0f0f2;
+      --white: #ffffff;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #888;
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", sans-serif;
+      color: var(--black);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 10mm auto;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4mm 16mm rgba(0, 0, 0, 0.12);
+    }
+
+    .sheet::before,
+    .sheet::after {
+      content: "";
+      position: absolute;
+      width: 14mm;
+      height: 14mm;
+      border-color: var(--grey-4);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .sheet::before {
+      top: 4mm;
+      left: 4mm;
+      border-width: 0.3mm 0 0 0.3mm;
+    }
+
+    .sheet::after {
+      top: 4mm;
+      right: 4mm;
+      border-width: 0.3mm 0.3mm 0 0;
+    }
+
+    @media print {
+      html, body {
+        background: #fff;
+      }
+      .sheet {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+    }
+
+    .inner {
+      padding: 8mm 10mm 0;
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 84mm;
+      gap: 5.5mm;
+      align-items: stretch;
+      padding-bottom: 4.5mm;
+      border-bottom: 0.35mm solid var(--grey-4);
+    }
+
+    .head-stack {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding: 1mm 3mm 2mm 0;
+      border-left: 0.5mm solid var(--red);
+      padding-left: 6mm;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 12.5pt;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--grey-2);
+      font-weight: 700;
+    }
+
+    .brand-line {
+      margin: 3.5mm 0 0;
+      font-size: 19pt;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: var(--black);
+      line-height: 1.22;
+    }
+
+    .brand-line .num {
+      letter-spacing: 0.04em;
+    }
+
+    .role {
+      margin: 2.5mm 0 0;
+      font-size: 14pt;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--grey-2);
+      line-height: 1.42;
+    }
+
+    /* 名前：姓・名を1行に（横並び） */
+    .name-block {
+      margin: 5.5mm 0 0;
+      padding-top: 4.5mm;
+      border-top: 0.4mm solid var(--red);
+    }
+
+    .name-ja {
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      gap: 0.28em;
+      font-size: 38pt;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.15;
+      color: var(--black);
+    }
+
+    .name-sei,
+    .name-mei {
+      letter-spacing: 0.1em;
+    }
+
+    .name-kana {
+      margin: 3mm 0 0;
+      font-size: 13.5pt;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--grey-2);
+    }
+
+    .name-catch {
+      margin: 3.5mm 0 0;
+    }
+
+    .name-catch-line {
+      margin: 0;
+      font-size: 13.5pt;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      line-height: 1.38;
+      color: var(--grey-1);
+    }
+
+    .name-catch-line + .name-catch-line {
+      margin-top: 1.2mm;
+    }
+
+    /* 写真：枠は「1本」だけ（グレー地＋単線） */
+    .photo-hero {
+      margin: 0;
+      align-self: stretch;
+      padding: 2.5mm;
+      background: var(--grey-bg);
+      border: 0.35mm solid var(--grey-4);
+      border-radius: 1.5mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 94mm;
+    }
+
+    .photo-hero img {
+      display: block;
+      max-width: 100%;
+      max-height: 88mm;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      object-position: center center;
+    }
+
+    .mid-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+      margin-top: 5.5mm;
+      align-items: stretch;
+    }
+
+    /* 左カラム・右カラム：赤帯＋内側余白を同一にして見出し位置をそろえる */
+    .reco-block,
+    .price-block {
+      padding: 6mm 5.5mm 6mm 5.5mm;
+      border: 0.3mm solid var(--grey-4);
+      border-left: 2.4mm solid var(--red);
+    }
+
+    .reco-block {
+      background: var(--white);
+    }
+
+    .reco-title {
+      margin: 0 0 4.8mm;
+      font-size: 14.5pt;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--black);
+      text-align: left;
+      line-height: 1.32;
+    }
+
+    .reco-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .reco-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 4.5mm;
+      font-size: 13.5pt;
+      line-height: 1.48;
+      font-weight: 600;
+      color: var(--grey-1);
+      padding: 3.2mm 0;
+      border-bottom: 0.25mm solid var(--grey-4);
+    }
+
+    .reco-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .reco-item:first-child {
+      padding-top: 0;
+    }
+
+    /* 枠内だけ黒＋白チェック（オススメ欄の背景は料金と同じ白） */
+    .reco-mark {
+      flex-shrink: 0;
+      width: 7.5mm;
+      height: 7.5mm;
+      margin-top: 0.06em;
+      position: relative;
+      border-radius: 0.35mm;
+      background: #000000;
+      border: 0.15mm solid #3c3c44;
+    }
+
+    .reco-mark::after {
+      content: "";
+      position: absolute;
+      left: 1.65mm;
+      top: 1.05mm;
+      width: 3.1mm;
+      height: 1.55mm;
+      border-left: 0.78mm solid var(--white);
+      border-bottom: 0.78mm solid var(--white);
+      transform: rotate(-46deg);
+    }
+
+    .price-block {
+      background: var(--white);
+    }
+
+    .price-title {
+      margin: 0 0 4.5mm;
+      font-size: 14.5pt;
+      font-weight: 800;
+      color: var(--black);
+      text-align: left;
+      letter-spacing: 0.05em;
+      line-height: 1.35;
+    }
+
+    .prices {
+      display: grid;
+      gap: 2.8mm;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 3mm;
+      padding-bottom: 2.8mm;
+      border-bottom: 0.25mm solid var(--grey-4);
+    }
+
+    .price-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .duration {
+      font-size: 15.5pt;
+      font-weight: 800;
+      color: var(--grey-1);
+    }
+
+    .yen {
+      font-size: 20.5pt;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--red);
+    }
+
+    .tax {
+      font-size: 11pt;
+      color: var(--grey-2);
+      font-weight: 600;
+      margin-left: 1.2mm;
+    }
+
+    .cta-shell {
+      margin-top: 5.5mm;
+      padding: 5.5mm 6mm 6mm;
+      border: 0.3mm solid var(--grey-4);
+      background: var(--white);
+    }
+
+    .cta {
+      display: grid;
+      grid-template-columns: 1fr 46mm;
+      gap: 6mm;
+      align-items: start;
+    }
+
+    .cta-copy {
+      min-width: 0;
+    }
+
+    .cta-lead {
+      margin: 0;
+      font-size: 14.5pt;
+      line-height: 1.45;
+      font-weight: 700;
+      color: var(--grey-1);
+      letter-spacing: 0.02em;
+    }
+
+    .cta-sub {
+      margin: 1.8mm 0 0;
+      font-size: 12pt;
+      line-height: 1.52;
+      font-weight: 600;
+      color: var(--grey-2);
+      letter-spacing: 0.02em;
+    }
+
+    .cta-meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 3mm;
+      row-gap: 2.2mm;
+      margin-top: 3.8mm;
+      align-items: start;
+    }
+
+    .cta-qr-icons {
+      grid-column: 1;
+      grid-row: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5mm;
+      padding-top: 0.32em;
+    }
+
+    .cta-ico-wrap {
+      width: 6mm;
+      height: 6mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+
+    .cta-ico-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* カレンダー素材の余白が多いため、見た目の大きさをLINEに寄せる */
+    .cta-ico-cal img {
+      transform: scale(1.26);
+      transform-origin: center center;
+    }
+
+    .cta-qr-info-text {
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+      font-size: 10.5pt;
+      line-height: 1.65;
+      color: var(--grey-2);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .cta-note {
+      grid-column: 2;
+      grid-row: 2;
+      margin: 0;
+      font-size: 10.5pt;
+      line-height: 1.62;
+      color: var(--grey-3);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-lead strong {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .staff-callout {
+      margin: 4.5mm 0 0;
+      padding: 4mm 4.5mm;
+      font-size: 12pt;
+      line-height: 1.58;
+      font-weight: 700;
+      color: var(--grey-1);
+      background: var(--grey-bg);
+      border-left: 2.2mm solid var(--red);
+    }
+
+    .staff-callout em {
+      font-style: normal;
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .qr-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .qr-slot {
+      width: 46mm;
+      height: 46mm;
+      padding: 2.2mm;
+      background: var(--white);
+      border: 0.35mm solid var(--grey-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .qr-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-foot {
+      margin-top: auto;
+      margin-left: -10mm;
+      margin-right: -10mm;
+      margin-bottom: 0;
+      padding: 4mm 10mm 4.5mm;
+      background: var(--red);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .brand-foot img {
+      display: block;
+      margin: 0 auto;
+      max-width: 82mm;
+      height: auto;
+      max-height: 13mm;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <div class="inner">
+      <div class="hero-row">
+        <header class="head-stack">
+          <p class="eyebrow">PERSONAL TRAINER</p>
+          <p class="brand-line">JOYFIT<span class="num">24</span>　経堂</p>
+          <p class="role">パーソナルトレーナー</p>
+          <div class="name-block">
+            <p class="name-ja">
+              <span class="name-sei">日下</span>
+              <span class="name-mei">竜太</span>
+            </p>
+            <p class="name-kana">クサカ　リュウタ</p>
+            <div class="name-catch">
+              <p class="name-catch-line">BIG3トータル700kg</p>
+              <p class="name-catch-line">FW徹底指導</p>
+            </div>
+          </div>
+        </header>
+        <figure class="photo-hero" aria-label="トレーナー">
+          <img src="kusaka-ry-04.jpg" alt="" />
+        </figure>
+      </div>
+
+      <div class="mid-split">
+        <section class="reco-block" aria-label="おすすめ">
+          <h2 class="reco-title">こんな方に<br />オススメです</h2>
+          <ul class="reco-list">
+            <li class="reco-item">
+              <span class="reco-mark" aria-hidden="true"></span>
+              <span>BIG3の重量を伸ばしたい</span>
+            </li>
+            <li class="reco-item">
+              <span class="reco-mark" aria-hidden="true"></span>
+              <span>フリーウエイトの使い方が分からない</span>
+            </li>
+            <li class="reco-item">
+              <span class="reco-mark" aria-hidden="true"></span>
+              <span>筋肉量を増やしたい</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="price-block" aria-label="料金">
+          <p class="price-title">料金（税込）</p>
+          <div class="prices">
+            <div class="price-row">
+              <span class="duration">30分</span>
+              <span><span class="yen">3,300円</span><span class="tax">税込</span></span>
+            </div>
+            <div class="price-row">
+              <span class="duration">60分</span>
+              <span><span class="yen">6,600円</span><span class="tax">税込</span></span>
+            </div>
+            <div class="price-row">
+              <span class="duration">90分</span>
+              <span><span class="yen">9,900円</span><span class="tax">税込</span></span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="cta-shell">
+        <div class="cta">
+          <div class="cta-copy">
+            <p class="cta-lead">お申し込みは<strong>LINEの友だち追加</strong>から。</p>
+            <p class="cta-sub">QRを読み取り、友だち追加後にお申し込みください。</p>
+            <div class="cta-meta">
+              <span class="cta-qr-icons" aria-hidden="true">
+                <span class="cta-ico-wrap"><img src="icon-line.png" alt="" /></span>
+                <span class="cta-ico-wrap cta-ico-cal"><img src="icon-calendar.png" alt="" /></span>
+              </span>
+              <p class="cta-qr-info-text">※このQRは、LINEと私のGoogleカレンダー<br />（ご予定・空き）をひとつにまとめたリンクです。</p>
+              <p class="cta-note">※友だち追加のみですと見逃してしまう可能性がございます。<br />必ずご要望やご挨拶の一言など、メッセージをお送りください。</p>
+            </div>
+          </div>
+          <div class="qr-wrap">
+            <div class="qr-slot" id="qr-slot">
+              <img src="QR_734379.png" alt="LINE友だち追加用QR" />
+            </div>
+          </div>
+        </div>
+        <p class="staff-callout">
+          ※<em>JOYFIT24</em> 経堂常駐スタッフですので、直接話しかけていただいても大丈夫です！
+        </p>
+      </div>
+
+      <footer class="brand-foot" aria-label="JOYFIT">
+        <img src="JOYLOGO%20.png" alt="JOYFIT24" />
+      </footer>
+    </div>
+  </article>
+</body>
+</html>

@@ -29,6 +29,13 @@
       --gold-pale: #ede4c8;
       /* CTA白枠と赤フッターのあいだ（両POP共通） */
       --pop-cta-to-foot-gap: 3mm;
+      /* 1枚目・2枚目共通：用紙内の余白（サイズ感を揃える） */
+      --pop-inner-pad-x: 10mm;
+      --pop-inner-pad-top: 7.5mm;
+      /* 印刷は両シート同一。数 mm だけ詰めて 100% PDF でも収まりやすく */
+      --pop-inner-pad-top-print: 6.5mm;
+      /* 中段ブロック上余白（mid-split / notice-split で統一） */
+      --pop-section-gap-y: 5.5mm;
     }
 
     html, body {
@@ -93,6 +100,9 @@
         overflow: visible;
         page-break-after: always;
         break-after: page;
+        /* PDF でも .inner が A4 高まで伸び、sheet-tail の margin-top:auto で CTA/帯を下端へ */
+        display: flex;
+        flex-direction: column;
       }
 
       .sheet + .sheet {
@@ -108,8 +118,17 @@
       .inner {
         box-sizing: border-box;
         max-width: 210mm;
+        width: 100%;
+        padding: var(--pop-inner-pad-top-print) var(--pop-inner-pad-x) 0;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+
+      .sheet > .inner {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
       }
 
       .brand-foot {
@@ -132,12 +151,6 @@
       .sheet-tail {
         break-inside: avoid;
         page-break-inside: avoid;
-      }
-
-      /* キャンペーン面：印刷時のみ詰めて A4 1枚に収める（はみ出しで余白ページが挟まるのを防ぐ） */
-      .sheet--campaign .inner {
-        padding: 5.5mm 10mm 0;
-        min-height: 0;
       }
 
       .sheet--campaign .luxe-banner {
@@ -184,33 +197,69 @@
         font-size: 24pt;
       }
 
-      .sheet--campaign .price-footnote-split {
-        gap: 2.5mm;
-        margin-top: 0;
+      /* 全幅オファーブロック（印刷） */
+      .sheet--campaign .campaign-offer-stack {
+        padding: 4mm;
       }
 
-      .sheet--campaign .price-footnote-split__left.price-footnote--promo {
-        padding: 2.6mm 3mm;
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner {
+        padding: 2mm 0;
+        gap: 0 3.5mm;
+        align-items: stretch;
+        border-radius: 0;
+        border-top: 0.5mm dashed rgba(165, 53, 75, 0.4);
+        border-bottom: 0.5mm dashed rgba(165, 53, 75, 0.4);
+        background: transparent;
+        box-shadow: none;
       }
 
-      .sheet--campaign .price-footnote-split__left .price-footnote-line,
-      .sheet--campaign .price-footnote-split__left .price-footnote-line--ind,
-      .sheet--campaign .price-footnote-split__left .price-footnote-line:first-child {
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-was,
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-now {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        min-height: 10mm;
+      }
+
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-now {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-amount {
+        flex-direction: row;
+        align-items: baseline;
+      }
+
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-divider {
+        flex-basis: 4mm;
+        width: 4mm;
+        min-width: 4mm;
+        align-self: stretch;
+      }
+
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-num {
+        font-size: 28pt;
+      }
+
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-num--line {
+        font-size: 20pt;
+      }
+
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-label,
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-label--hot {
         font-size: 10.5pt;
-        line-height: 1.4;
       }
 
-      .sheet--campaign .promo-remind {
-        padding: 2.6mm 3mm;
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-yen {
+        font-size: 13pt;
       }
 
-      .sheet--campaign .promo-remind-title {
-        font-size: 11.5pt;
+      .sheet--campaign .campaign-offer-stack .campaign-price-strip-inner .price-compare-tax {
+        font-size: 9.5pt;
       }
 
-      .sheet--campaign .promo-remind-body {
-        font-size: 10.5pt;
-      }
     }
 
     /* 画面用：PDF保存ボタン（印刷時は非表示） */
@@ -245,30 +294,6 @@
       filter: brightness(1.06);
     }
 
-    .pdf-btn-row {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      width: 100%;
-    }
-
-    .pdf-btn--png {
-      background: var(--grey-1);
-      color: var(--white);
-    }
-
-    .pdf-btn--png:hover {
-      filter: brightness(1.08);
-    }
-
-    .pdf-hint--sub {
-      margin: 6px 0 0;
-      font-size: 10px;
-      line-height: 1.45;
-      color: var(--grey-2);
-      font-weight: 500;
-    }
-
     .pdf-hint {
       margin: 8px 0 0;
       font-size: 10.5px;
@@ -282,7 +307,7 @@
     }
 
     .inner {
-      padding: 8mm 10mm 0;
+      padding: var(--pop-inner-pad-top) var(--pop-inner-pad-x) 0;
       min-height: 297mm;
       display: flex;
       flex-direction: column;
@@ -308,7 +333,7 @@
       gap: 5.5mm;
       align-items: stretch;
       padding-bottom: 4.5mm;
-      border-bottom: 0.55mm solid var(--grey-4);
+      border-bottom: 0.8mm solid var(--grey-4);
     }
 
     .head-stack {
@@ -317,7 +342,7 @@
       justify-content: center;
       text-align: left;
       padding: 1mm 3mm 2mm 0;
-      border-left: 0.75mm solid var(--red);
+      border-left: 2mm solid var(--red); /* 太く目立たせる */
       padding-left: 6mm;
       font-feature-settings: "palt" 1;
     }
@@ -358,7 +383,7 @@
     .name-block {
       margin: 5.5mm 0 0;
       padding-top: 4.5mm;
-      border-top: 0.65mm solid var(--red);
+      border-top: 1.5mm solid var(--red); /* 太く目立たせる */
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -413,26 +438,59 @@
       padding: 0;
     }
 
-    .name-catch-line {
+    /* 「最高記録」をアピールするバッジ */
+    .name-catch-title {
+      margin: 0 0 1.5mm;
+      font-size: 10.5pt;
+      font-weight: 900;
+      color: var(--white);
+      background: var(--black);
+      display: inline-block;
+      padding: 1.5mm 3mm;
+      border-radius: 0.8mm;
+      letter-spacing: 0.1em;
+    }
+
+    /* 筋トレ感・ガチ感を出すための記録リスト */
+    .record-list {
       margin: 0;
-      font-size: 13.5pt;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      line-height: 1.36;
-      color: var(--grey-1);
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
+      width: 100%;
+      max-width: 68mm;
     }
 
-    .name-catch-line:first-of-type {
-      font-size: 14.25pt;
+    .record-list li {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 0.5mm dotted var(--grey-4);
+      padding-bottom: 0.5mm;
+    }
+
+    .record-label {
+      font-size: 10.5pt;
+      font-weight: 800;
+      color: var(--grey-1);
       letter-spacing: 0.05em;
-      color: var(--black);
     }
 
-    .name-catch-line + .name-catch-line {
-      margin-top: 1.1mm;
-      font-size: 12.75pt;
-      font-weight: 700;
-      color: var(--grey-1);
+    .record-value {
+      font-size: 14pt;
+      font-weight: 900;
+      color: var(--red);
+      font-style: italic; /* 斜体でスポーツ特有の力強さを表現 */
+      letter-spacing: 0.02em;
+    }
+
+    .record-value small {
+      font-size: 8.5pt;
+      font-style: normal;
+      color: var(--grey-2);
+      margin-left: 0.5mm;
     }
 
     /* 写真：シートと同じ白地＋枠線 */
@@ -441,7 +499,7 @@
       align-self: stretch;
       padding: 2.5mm;
       background: var(--white);
-      border: 0.5mm solid var(--grey-4);
+      border: 1.2mm solid var(--grey-4); /* 太く目立たせる */
       border-radius: 1.5mm;
       display: flex;
       align-items: center;
@@ -463,18 +521,18 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5mm;
-      margin-top: 5.5mm;
+      margin-top: var(--pop-section-gap-y);
       align-items: stretch;
       padding-bottom: 4.5mm;
-      border-bottom: 0.55mm solid var(--grey-4);
+      border-bottom: 0.8mm solid var(--grey-4);
     }
 
     /* 左カラム・右カラム：赤帯＋内側余白を同一にして見出し位置をそろえる */
     .reco-block,
     .price-block {
-      padding: 6mm 5.5mm 6mm 5.5mm;
-      border: 0.5mm solid var(--grey-4);
-      border-left: 2.9mm solid var(--red);
+      padding: 6mm 5mm 6mm 5mm;
+      border: 1.2mm solid var(--grey-4); /* 太く目立たせる */
+      border-left: 4.5mm solid var(--red); /* さらに太くインパクトを */
     }
 
     .reco-block {
@@ -485,7 +543,7 @@
       margin: 0 0 4.8mm;
       font-size: 14.5pt;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       color: var(--black);
       text-align: left;
       line-height: 1.32;
@@ -506,7 +564,7 @@
       font-weight: 700;
       color: var(--black);
       padding: 3.2mm 0;
-      border-bottom: 0.45mm solid var(--grey-4);
+      border-bottom: 0.8mm solid var(--grey-4); /* 太く目立たせる */
     }
 
     .reco-item:last-child {
@@ -537,8 +595,8 @@
       top: 1.05mm;
       width: 3.1mm;
       height: 1.55mm;
-      border-left: 0.78mm solid var(--white);
-      border-bottom: 0.78mm solid var(--white);
+      border-left: 0.8mm solid var(--white); /* チェックを太く */
+      border-bottom: 0.8mm solid var(--white); /* チェックを太く */
       transform: rotate(-46deg);
     }
 
@@ -567,7 +625,7 @@
       justify-content: space-between;
       gap: 3mm;
       padding-bottom: 2.8mm;
-      border-bottom: 0.45mm solid var(--grey-4);
+      border-bottom: 0.8mm solid var(--grey-4); /* 太く目立たせる */
     }
 
     .price-row:last-child {
@@ -603,7 +661,7 @@
       display: flex;
       flex-direction: column;
       background: var(--white);
-      border: 0.45mm solid var(--grey-3);
+      border: 1mm solid var(--grey-3); /* 太く目立たせる */
       box-shadow:
         inset 0 0 0 0.15mm var(--white),
         0 0 0 0.15mm var(--grey-4),
@@ -718,7 +776,7 @@
       font-weight: 800;
       color: var(--black);
       background: var(--grey-bg);
-      border-left: 2.9mm solid var(--red);
+      border-left: 4.5mm solid var(--red); /* 太く目立たせる */
       border-radius: 0 0 0.8mm 0.8mm;
       flex-shrink: 0;
     }
@@ -740,7 +798,7 @@
       height: 48mm;
       padding: 2.3mm;
       background: var(--white);
-      border: 0.75mm solid var(--red);
+      border: 1.5mm solid var(--red); /* 太く目立たせる */
       border-radius: 2.2mm;
       display: flex;
       align-items: center;
@@ -814,11 +872,9 @@
     }
 
     /* ── キャンペーン専用：限定感（落ち着いたトーン） ── */
-    /* キャンペーンシート：背景グラデは印刷で薄くブレやすいためオフ */
+    /* キャンペーンシート：背景グラデは印刷で薄くブレやすいためオフ（余白は .inner と同一トークン） */
     .sheet--campaign .inner {
       background-image: none;
-      padding: 8mm 10mm 0;
-      min-height: 297mm;
     }
 
     .limit-pill strong {
@@ -851,311 +907,321 @@
       color: var(--black);
     }
 
-    /* キャンペーン中段：説明（全幅）→ 料金横長1本 → 注意書き左右（縦並びで1枚目の中段に近いリズム） */
-    .sheet--campaign .campaign-mid-stack {
-      margin-top: 5.5mm;
-      padding-bottom: 4.5mm;
-      border-bottom: 0.55mm solid var(--grey-4);
+    /* 先着バナーと概要・料金を1つの黒い高級カードにまとめる */
+    .sheet--campaign .campaign-offer-stack {
+      width: 100%;
+      margin-top: 0;
+      padding: 6mm 6mm 6mm;
+      border: 2mm solid var(--grey-3); /* 豪華な極太枠に変更 */
+      border-radius: 2mm;
+      background: radial-gradient(ellipse 115% 120% at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%), linear-gradient(168deg, #1a1a22 0%, #0c0c10 42%, #141018 100%); /* 光沢感を復元 */
+      box-shadow: 0 2.5mm 14mm rgba(0, 0, 0, 0.38), inset 0 0.35mm 0 rgba(255, 255, 255, 0.07);
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 4.8mm;
-      width: 100%;
+      justify-content: center;
+      gap: 4mm; 
     }
 
-    .sheet--campaign .campaign-mid-stack > .campaign-lead-block {
-      width: 100%;
+    .sheet--campaign .luxe-banner-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 4mm;
+      border-bottom: 1mm dashed var(--grey-3); /* 太く目立たせる */
     }
 
-    .sheet--campaign .campaign-lead-block .reco-title {
+    .sheet--campaign .luxe-banner-headline {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5mm;
+    }
+
+    .sheet--campaign .luxe-banner-headline-sup {
+      display: inline-block;
+      font-size: 14pt;
+      font-weight: 900;
+      color: var(--white);
+      background: var(--red);
+      padding: 1.5mm 5mm;
+      border-radius: 1mm;
+      letter-spacing: 0.15em;
+      margin-bottom: 1mm;
+    }
+
+    .sheet--campaign .luxe-banner-headline-top {
+      margin: 0;
+      font-size: 20pt;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: var(--white);
+      line-height: 1.15;
+    }
+
+    .sheet--campaign .luxe-banner-headline-top strong {
+      font-size: 56pt;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 0.95;
+      color: var(--white);
+      text-shadow: 0 2mm 0 var(--red);
+    }
+
+    .sheet--campaign .luxe-banner-headline-sub {
+      margin: 0;
+      font-size: 26pt; 
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      line-height: 1.22;
+    }
+
+    .sheet--campaign .campaign-offer-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4mm;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .sheet--campaign .campaign-title {
+      margin: 0 0 1.5mm;
+      font-size: 21pt;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .sheet--campaign .campaign-lead-block .campaign-lead-text {
+      margin: 0;
       font-size: 15.5pt;
-      margin-bottom: 5mm;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--grey-4);
+      letter-spacing: 0.04em;
+      text-align: center;
     }
 
-    .sheet--campaign .campaign-price-strip {
+    .sheet--campaign .campaign-lead-block .campaign-lead-text strong {
+      color: var(--white);
+      font-weight: 900;
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 0.25em; /* 下線をガッツリ太くする */
+      text-underline-offset: 0.15em;
+      background: transparent;
+      padding: 0;
+    }
+
+    .sheet--campaign .campaign-offer-stack .campaign-price-strip {
       width: 100%;
     }
 
     .sheet--campaign .campaign-price-strip-inner {
       display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      justify-content: space-between;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10mm 6.5mm 10mm;
-      gap: 0 5mm;
-      background: linear-gradient(198deg, #ffffff 0%, #fefcfb 42%, #fdf8f6 100%);
-      border-radius: 1.8mm;
-      border: 0.55mm solid rgba(165, 53, 75, 0.28);
-      box-shadow:
-        inset 0 0 0 0.1mm rgba(255, 255, 255, 1),
-        0 1.6mm 7mm rgba(165, 53, 75, 0.1),
-        0 1.2mm 5mm rgba(0, 0, 0, 0.05);
-      min-height: 40mm;
-    }
-
-    .sheet--campaign .campaign-price-strip-inner .price-compare-was,
-    .sheet--campaign .campaign-price-strip-inner .price-compare-now {
-      flex: 1 1 0;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
+      flex-direction: column; /* 横から縦に変更 */
       align-items: center;
       justify-content: center;
-      text-align: center;
-      gap: 2.8mm 0;
-      min-width: 0;
-      padding: 1.5mm 2mm 2mm;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0;
+      gap: 2.5mm;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      min-height: auto;
     }
 
     .sheet--campaign .campaign-price-strip-inner .price-compare-was {
-      background: transparent;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 4mm;
+      width: 100%;
     }
 
     .sheet--campaign .campaign-price-strip-inner .price-compare-now {
-      background: linear-gradient(172deg, rgba(165, 53, 75, 0.11) 0%, rgba(255, 255, 255, 0.97) 52%);
-      border-radius: 1.2mm;
-      border: 0.5mm solid rgba(165, 53, 75, 0.32);
-      box-shadow:
-        inset 0 0.6mm 0 rgba(255, 255, 255, 0.65),
-        0 1mm 5mm rgba(165, 53, 75, 0.12);
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: center;
+      gap: 5mm;
+      width: 100%;
+      padding: 3.5mm 0;
+      background: transparent;
     }
 
-    .sheet--campaign .campaign-price-strip-inner .price-compare-label {
-      font-size: 15pt;
+    /* 上段（通常価格） */
+    .sheet--campaign .campaign-price-strip-inner .price-compare-was .price-compare-label {
+      font-size: 13.5pt;
       font-weight: 800;
-      letter-spacing: 0.2em;
-      color: var(--grey-2);
-      line-height: 1.35;
+      letter-spacing: 0.1em;
+      color: var(--grey-4);
       white-space: nowrap;
-      flex-shrink: 0;
+    }
+    .sheet--campaign .campaign-price-strip-inner .price-compare-was .price-compare-num--line {
+      font-size: 22pt;
+      font-weight: 800;
+      color: var(--grey-3);
+      text-decoration: line-through;
+      text-decoration-color: var(--grey-4);
+      text-decoration-thickness: 0.12em;
+    }
+    .sheet--campaign .campaign-price-strip-inner .price-compare-was .price-compare-yen {
+      font-size: 14pt;
+      font-weight: 800;
+      color: var(--grey-3);
+    }
+    .sheet--campaign .campaign-price-strip-inner .price-compare-was .price-compare-tax {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--grey-3);
+      margin-left: 1mm;
     }
 
-    .sheet--campaign .campaign-price-strip-inner .price-compare-label--hot {
-      font-size: 15.5pt;
-      letter-spacing: 0.14em;
+    /* 下段（特別価格） */
+    .sheet--campaign .campaign-price-strip-inner .price-compare-now .price-compare-label--hot {
+      font-size: 19pt;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      white-space: nowrap;
+    }
+    .sheet--campaign .campaign-price-strip-inner .price-compare-now .price-compare-num {
+      font-size: 52pt;
+      font-weight: 900;
+      letter-spacing: 0.02em;
       color: var(--red);
     }
+    .sheet--campaign .campaign-price-strip-inner .price-compare-now .price-compare-yen {
+      font-size: 20pt;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .sheet--campaign .campaign-price-strip-inner .price-compare-now .price-compare-tax {
+      font-size: 13pt;
+      font-weight: 700;
+      color: var(--white);
+      margin-left: 1mm;
+    }
 
+    /* 共通レイアウト調整 */
     .sheet--campaign .campaign-price-strip-inner .price-compare-amount {
       margin: 0;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
+      align-items: baseline;
       justify-content: center;
-      gap: 1.2mm 0;
-      line-height: 1.15;
-      min-width: 0;
-      width: 100%;
+      gap: 0 1mm;
+      line-height: 1;
     }
 
     .sheet--campaign .campaign-price-strip-inner .price-compare-line-main {
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: baseline;
-      justify-content: center;
-      gap: 0 0.5mm;
+      display: contents;
     }
 
-    .sheet--campaign .campaign-price-strip-inner .price-compare-num {
-      font-size: 44pt;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-      color: var(--red);
-    }
-
-    .sheet--campaign .campaign-price-strip-inner .price-compare-num--line {
-      font-size: 30pt;
-      font-weight: 800;
-      color: var(--grey-1);
-      text-decoration: line-through;
-      text-decoration-color: var(--red);
-      text-decoration-thickness: 0.12em;
-    }
-
-    .sheet--campaign .campaign-price-strip-inner .price-compare-yen {
-      font-size: 18pt;
-      font-weight: 800;
-      color: inherit;
-    }
-
-    .sheet--campaign .campaign-price-strip-inner .price-compare-was .price-compare-yen,
-    .sheet--campaign .campaign-price-strip-inner .price-compare-was .price-compare-tax {
-      color: var(--grey-2);
-    }
-
-    .sheet--campaign .campaign-price-strip-inner .price-compare-now .price-compare-yen,
-    .sheet--campaign .campaign-price-strip-inner .price-compare-now .price-compare-tax {
-      color: var(--grey-1);
-    }
-
-    .sheet--campaign .campaign-price-strip-inner .price-compare-tax {
-      font-size: 12.5pt;
-      font-weight: 700;
-      margin: 0;
-      letter-spacing: 0.04em;
-      line-height: 1.25;
-    }
-
+    /* 横並び時代の縦棒を水平線（横棒）に変更 */
     .sheet--campaign .campaign-price-strip-inner .price-compare-divider {
-      position: relative;
-      flex: 0 0 7mm;
-      width: 7mm;
-      min-width: 7mm;
-      align-self: stretch;
-      min-height: 0;
+      width: 75%;
+      height: 1mm; /* 線を太くする */
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--grey-3) 50%, rgba(255,255,255,0) 100%);
+      flex: 0 0 auto;
     }
 
-    .sheet--campaign .campaign-price-strip-inner .price-compare-divider::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 10%;
-      bottom: 10%;
-      width: 0.85mm;
-      margin-left: calc(-0.85mm / 2);
-      border-radius: 0.5mm;
-      background: linear-gradient(
-        180deg,
-        rgba(165, 53, 75, 0) 0%,
-        rgba(165, 53, 75, 0.45) 14%,
-        var(--red) 32%,
-        var(--red) 68%,
-        rgba(165, 53, 75, 0.45) 86%,
-        rgba(165, 53, 75, 0) 100%
-      );
-      box-shadow: 0 0 2mm rgba(165, 53, 75, 0.25);
-    }
-
-    .sheet--campaign .campaign-lead-block .campaign-lead-text {
-      margin: 3.5mm 0 0;
-      font-size: 13.5pt;
-      font-weight: 700;
-      line-height: 1.55;
-      color: var(--grey-1);
-      letter-spacing: 0.02em;
-    }
-
-    .sheet--campaign .campaign-lead-block .campaign-lead-text strong {
-      color: var(--red);
-      font-weight: 800;
-    }
-
-    .sheet--campaign .price-footnote-split {
+    /* 左右のブロック（スクリーンショットの形に戻す） */
+    .sheet--campaign .notice-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3.5mm;
-      margin: 0;
+      gap: 5mm;
+      margin-top: var(--pop-section-gap-y);
       align-items: stretch;
+      padding-bottom: 4.5mm;
+      border-bottom: 0.8mm solid var(--grey-4);
     }
-
-    .sheet--campaign .price-footnote-split__left.price-footnote--promo {
-      margin: 0;
-      padding: 3.8mm 4mm 3.8mm 4mm;
-      border-radius: 1.4mm;
-      background: linear-gradient(118deg, #fffaf8 0%, #ffffff 48%, #faf6f3 100%);
-      border: 0.5mm solid rgba(165, 53, 75, 0.18);
-      border-left: 2.9mm solid var(--red);
-      box-shadow:
-        inset 0 0.5mm 0 rgba(255, 255, 255, 0.75),
-        0 1mm 4mm rgba(0, 0, 0, 0.05);
-    }
-
-    .sheet--campaign .price-footnote-split__left .price-footnote-line {
-      margin: 0;
-      font-size: 11.5pt;
-      font-weight: 800;
-      line-height: 1.48;
-      letter-spacing: 0.02em;
-      color: var(--grey-1);
-    }
-
-    .sheet--campaign .price-footnote-split__left .price-footnote-line + .price-footnote-line {
-      margin-top: 1mm;
-    }
-
-    .sheet--campaign .price-footnote-split__left .price-footnote-line--ind {
-      padding-left: 1em;
-      font-size: 11.5pt;
-      font-weight: 700;
-    }
-
-    .sheet--campaign .price-footnote-split__left .price-footnote-line:first-child {
-      font-size: 11.5pt;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      color: var(--red);
-    }
-
-    .sheet--campaign .promo-remind {
-      margin: 0;
-      padding: 3.8mm 4mm;
-      box-sizing: border-box;
-      border-radius: 1.4mm;
-      border: 0.5mm solid var(--grey-4);
-      border-left: 2.9mm solid var(--red);
+    
+    /* 左側：キャンペーン条件（リスト形式） */
+    .sheet--campaign .reco-block {
       background: var(--white);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 100%;
+      padding: 6mm 5mm 6mm 5mm;
+      box-shadow: 0 1mm 4mm rgba(0,0,0,0.05);
+      border: 1.2mm solid var(--grey-4); /* 太く目立たせる */
+      border-left: 4.5mm solid var(--red); /* 太く目立たせる */
+    }
+    
+    .sheet--campaign .reco-title {
+      margin: 0 0 4.8mm;
+      font-size: 14.5pt;
+      font-weight: 800;
+      color: var(--black);
+      text-align: left;
+      letter-spacing: 0.05em;
+      line-height: 1.32;
     }
 
-    .sheet--campaign .promo-remind-title {
-      margin: 0 0 1.8mm;
-      font-size: 13.5pt;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      color: var(--red);
-      line-height: 1.3;
-    }
-
-    .sheet--campaign .promo-remind-body {
-      margin: 0;
-      font-size: 12.5pt;
-      font-weight: 700;
-      line-height: 1.5;
-      color: var(--grey-1);
-      letter-spacing: 0.02em;
-    }
-
-    .luxe-banner {
-      width: 100%;
+    .sheet--campaign .reco-list {
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      border: 1.35mm solid #c9a03a;
-      border-radius: 1.8mm;
-      background:
-        radial-gradient(ellipse 115% 90% at 50% -8%, rgba(255, 220, 150, 0.2) 0%, transparent 52%),
-        linear-gradient(168deg, #1a1a22 0%, #0c0c10 42%, #141018 100%);
-      box-shadow:
-        0 2.5mm 14mm rgba(0, 0, 0, 0.38),
-        inset 0 0.35mm 0 rgba(255, 255, 255, 0.07);
-      position: relative;
-      overflow: hidden;
+      list-style: none;
     }
 
-    .luxe-banner-body {
+    .sheet--campaign .reco-item {
       display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      min-height: 28mm;
+      align-items: flex-start;
+      gap: 4.5mm;
+      font-size: 13.5pt;
+      line-height: 1.48;
+      font-weight: 700;
+      color: var(--black);
+      padding: 3.2mm 0;
+      border-bottom: 0.8mm solid var(--grey-4); /* 太く目立たせる */
     }
 
-    .luxe-banner-accent {
+    .sheet--campaign .reco-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .sheet--campaign .reco-item:first-child {
+      padding-top: 0;
+    }
+
+    /* 丸くて黒トーンのチェックマーク */
+    .sheet--campaign .reco-mark-circle {
       flex-shrink: 0;
-      width: 5.4mm;
-      background: linear-gradient(180deg, #d4566e 0%, var(--red) 42%, #6e1f2d 100%);
-      box-shadow: inset -0.3mm 0 0 rgba(0, 0, 0, 0.2);
+      width: 6mm;
+      height: 6mm;
+      margin-top: 0.3mm;
+      position: relative;
+      border-radius: 50%;
+      background: var(--grey-1);
+      box-shadow: 0 0.5mm 1mm rgba(0,0,0,0.2);
     }
 
-    .luxe-banner-main {
-      flex: 1;
-      padding: 5.5mm 8mm 5.2mm;
+    .sheet--campaign .reco-mark-circle::after {
+      content: "";
+      position: absolute;
+      left: 1.5mm;
+      top: 1.6mm;
+      width: 2.4mm;
+      height: 1.2mm;
+      border-left: 0.8mm solid var(--white); /* チェックを太く */
+      border-bottom: 0.8mm solid var(--white); /* チェックを太く */
+      transform: rotate(-46deg);
+    }
+
+    /* 右側：お申し込みはお早めに（バッジデザイン） */
+    .sheet--campaign .notice-hurry-block {
+      background: var(--white);
+      padding: 6mm 5mm 6mm 5mm;
+      box-shadow: 0 1mm 4mm rgba(0,0,0,0.05);
+      border: 1.2mm solid var(--red); /* 太く目立たせる */
+      border-left: 4.5mm solid var(--red); /* 太く目立たせる */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1163,43 +1229,27 @@
       text-align: center;
     }
 
-    .luxe-banner-headline {
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2.4mm;
-    }
-
-    .luxe-banner-headline-top {
-      margin: 0;
-      font-size: 18.5pt;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      color: #ffffff;
-      line-height: 1.15;
-      text-shadow: 0 0.1em 0 rgba(0, 0, 0, 0.45);
-    }
-
-    .luxe-banner-headline-top strong {
-      font-size: 54pt;
+    .sheet--campaign .hurry-title {
+      display: inline-block;
+      margin: 0 0 2.5mm;
+      font-size: 12pt;
       font-weight: 900;
-      letter-spacing: 0;
-      line-height: 0.95;
-      color: #fffdf6;
-      text-shadow:
-        0 0.04em 0 rgba(0, 0, 0, 0.42),
-        0 2mm 0 rgba(110, 31, 45, 0.38);
+      letter-spacing: 0.05em;
+      color: var(--red);
+      background: rgba(165, 53, 75, 0.08);
+      padding: 1.5mm 4.5mm;
+      border-radius: 4mm;
     }
 
-    .luxe-banner-headline-sub {
+    .sheet--campaign .hurry-text {
+      font-size: 11pt;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--grey-1);
+    }
+
+    .sheet--campaign .hurry-text p {
       margin: 0;
-      font-size: 25pt;
-      font-weight: 900;
-      letter-spacing: 0.2em;
-      color: #fffefa;
-      line-height: 1.22;
-      text-shadow: 0 1.6mm 3.5mm rgba(0, 0, 0, 0.35);
     }
 
     /* キャンペーン面を A4 1枚の高さに収める */
@@ -1232,19 +1282,16 @@
       color: var(--black);
       letter-spacing: 0.02em;
     }
-  
   </style>
 </head>
 <body>
-  <div class="pdf-toolbar" role="region" aria-label="PDF・PNG保存">
+  <div class="pdf-toolbar" role="region" aria-label="PDF保存">
     <div class="pdf-btn-row">
       <button type="button" class="pdf-btn" id="btn-save-pdf">2枚まとめてPDF保存</button>
-      <button type="button" class="pdf-btn pdf-btn--png" id="btn-save-png">高画質PNG保存</button>
     </div>
     <p class="pdf-hint">
-      押すと印刷画面が開きます<strong>プリンターで「PDFに保存」</strong>を選ぶと<strong>1枚目：トレーナー紹介 → 2枚目：初回キャンペーン</strong>の順で2ページのPDFになります<strong>余白なし</strong>・<strong>背景のグラフィック</strong>をオンにしてください
+      押すと印刷画面が開きます。<strong>「PDFに保存」</strong>を選び、<strong>余白なし・背景のグラフィックをオン</strong>にして保存してください。1枚目・2枚目は<strong>同じ外周余白</strong>になるよう揃えています。レイアウトがずれるときは<strong>拡大／縮小を「既定」または 100%</strong>にしてください。A4印刷に最適な高画質で出力されます。
     </p>
-    <p class="pdf-hint pdf-hint--sub">PNGは最大4倍の解像度で書き出します（失敗時は自動で下げます） fileを直接開いたままだとQRなどの画像取得がブロックされ失敗することがあります このフォルダで python -m http.server 8765 を実行し http://localhost:8765 からこのHTMLを開いてください</p>
   </div>
 <article class="sheet">
     <div class="inner">
@@ -1265,8 +1312,12 @@
               </div>
             </div>
             <div class="name-catch">
-              <p class="name-catch-line">BIG3トータル680kg</p>
-              <p class="name-catch-line">FW徹底指導</p>
+              <p class="name-catch-title">現在の最高記録</p>
+              <ul class="record-list">
+                <li><span class="record-label">スクワット</span><span class="record-value">230<small>kg</small></span></li>
+                <li><span class="record-label">ベンチプレス</span><span class="record-value">180<small>kg</small></span></li>
+                <li><span class="record-label">デッドリフト</span><span class="record-value">280<small>kg</small></span></li>
+              </ul>
             </div>
           </div>
         </header>
@@ -1277,7 +1328,7 @@
 
       <div class="mid-split">
         <section class="reco-block" aria-label="おすすめ">
-          <h2 class="reco-title">こんな方に<br />オススメです</h2>
+          <h2 class="reco-title">こんな方にオススメです</h2>
           <ul class="reco-list">
             <li class="reco-item">
               <span class="reco-mark" aria-hidden="true"></span>
@@ -1285,7 +1336,7 @@
             </li>
             <li class="reco-item">
               <span class="reco-mark" aria-hidden="true"></span>
-              <span>フリーウエイトの使い方が分からない</span>
+              <span>フリーウエイトの使い方が知りたい</span>
             </li>
             <li class="reco-item">
               <span class="reco-mark" aria-hidden="true"></span>
@@ -1295,19 +1346,19 @@
         </section>
 
         <section class="price-block" aria-label="料金">
-          <p class="price-title">料金（税込）</p>
+          <p class="price-title">パーソナル料金</p>
           <div class="prices">
             <div class="price-row">
               <span class="duration">30分</span>
-              <span><span class="yen">3,300円</span><span class="tax">税込</span></span>
+              <span><span class="yen">3,300円</span><span class="tax">(税込)</span></span>
             </div>
             <div class="price-row">
               <span class="duration">60分</span>
-              <span><span class="yen">6,600円</span><span class="tax">税込</span></span>
+              <span><span class="yen">6,600円</span><span class="tax">(税込)</span></span>
             </div>
             <div class="price-row">
               <span class="duration">90分</span>
-              <span><span class="yen">9,900円</span><span class="tax">税込</span></span>
+              <span><span class="yen">9,900円</span><span class="tax">(税込)</span></span>
             </div>
           </div>
         </section>
@@ -1345,63 +1396,70 @@
       </div>
     </div>
   </article>
-<article class="sheet sheet--campaign">
+  <article class="sheet sheet--campaign">
     <div class="inner">
-      <aside class="luxe-banner" aria-label="限定キャンペーン">
-        <div class="luxe-banner-body">
-          <div class="luxe-banner-accent" aria-hidden="true"></div>
-          <div class="luxe-banner-main">
-            <p class="luxe-banner-headline">
-              <span class="luxe-banner-headline-top">先着<strong>5</strong>名様</span>
-              <span class="luxe-banner-headline-sub">限定キャンペーン</span>
-            </p>
-          </div>
-        </div>
-      </aside>
-
-      <div class="campaign-mid-stack">
-        <section class="reco-block campaign-lead-block" aria-label="キャンペーン概要">
-          <h2 class="reco-title">60分セッション<br />＋カウンセリング</h2>
-          <p class="campaign-lead-text">
-            初回のみ、通常<strong>6,600円</strong>(税込)のコースを<strong>3,300円</strong>(税込)の特別価格でご案内します。
+      <div class="campaign-offer-stack">
+        <div class="luxe-banner-header">
+          <p class="luxe-banner-headline">
+            <span class="luxe-banner-headline-sup">5月限定</span>
+            <span class="luxe-banner-headline-top">先着<strong>5</strong>名様</span>
+            <span class="luxe-banner-headline-sub">特別キャンペーン！</span>
           </p>
+        </div>
+
+        <div class="campaign-offer-block">
+          <section class="campaign-lead-block" aria-label="キャンペーン概要">
+            <h2 class="campaign-title">60分セッション＋カウンセリング</h2>
+            <p class="campaign-lead-text">
+              通常6,600円～<strong>3,300円＋カウンセリング</strong>の特別価格でご案内
+            </p>
+          </section>
+          <div class="campaign-price-strip" aria-label="料金比較">
+            <div class="campaign-price-strip-inner">
+              <div class="price-compare-was">
+                <span class="price-compare-label">通常</span>
+                <p class="price-compare-amount">
+                  <span class="price-compare-num price-compare-num--line">6,600</span>
+                  <span class="price-compare-yen">円</span>
+                  <span class="price-compare-tax">(税込)</span>
+                </p>
+              </div>
+              <div class="price-compare-divider" aria-hidden="true"></div>
+              <div class="price-compare-now">
+                <span class="price-compare-label price-compare-label--hot">特別価格</span>
+                <p class="price-compare-amount">
+                  <span class="price-compare-num">3,300</span>
+                  <span class="price-compare-yen">円</span>
+                  <span class="price-compare-tax">(税込)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-split" role="note">
+        <section class="reco-block" aria-label="キャンペーン条件">
+          <h2 class="reco-title">キャンペーン条件</h2>
+          <ul class="reco-list">
+            <li class="reco-item">
+              <span class="reco-mark-circle" aria-hidden="true"></span>
+              <span>日下トレーナーのみ限定</span>
+            </li>
+            <li class="reco-item">
+              <span class="reco-mark-circle" aria-hidden="true"></span>
+              <span>初回のみの特別価格になります</span>
+            </li>
+          </ul>
         </section>
-
-        <div class="campaign-price-strip" aria-label="料金比較">
-          <div class="campaign-price-strip-inner">
-            <div class="price-compare-was">
-              <span class="price-compare-label">通常</span>
-              <p class="price-compare-amount">
-                <span class="price-compare-line-main">
-                  <span class="price-compare-num price-compare-num--line">6,600</span><span class="price-compare-yen">円</span>
-                </span>
-                <span class="price-compare-tax">(税込)</span>
-              </p>
-            </div>
-            <div class="price-compare-divider" aria-hidden="true"></div>
-            <div class="price-compare-now">
-              <span class="price-compare-label price-compare-label--hot">特別価格</span>
-              <p class="price-compare-amount">
-                <span class="price-compare-line-main">
-                  <span class="price-compare-num">3,300</span><span class="price-compare-yen">円</span>
-                </span>
-                <span class="price-compare-tax">(税込)</span>
-              </p>
-            </div>
+        
+        <section class="notice-hurry-block" aria-label="お申し込みはお早めに">
+          <h2 class="hurry-title">お申し込みはお早めに</h2>
+          <div class="hurry-text">
+            <p>定員に達し次第終了となります</p>
+            <p>枠が埋まり次第終了いたします</p>
           </div>
-        </div>
-
-        <div class="price-footnote-split" role="note">
-          <div class="price-footnote-split__left price-footnote price-footnote--promo">
-            <p class="price-footnote-line">※定員に達し次第終了</p>
-            <p class="price-footnote-line price-footnote-line--ind">日下トレーナーのみ限定</p>
-            <p class="price-footnote-line price-footnote-line--ind">初回のみの特別価格になります</p>
-          </div>
-          <div class="price-footnote-split__right promo-remind">
-            <p class="promo-remind-title">お申し込みはお早めに</p>
-            <p class="promo-remind-body">枠が埋まり次第<br />募集を終了いたします</p>
-          </div>
-        </div>
+        </section>
       </div>
 
       <div class="sheet-tail">
@@ -1439,96 +1497,13 @@
   <script>
     (function () {
       var PDF_ID = "btn-save-pdf";
-      var PNG_ID = "btn-save-png";
 
       function bindPdf() {
         var btn = document.getElementById(PDF_ID);
         if (btn) btn.addEventListener("click", function () { window.print(); });
       }
 
-      function fileNamesForSheets(sheets) {
-        var n = sheets.length;
-        if (n === 2) return ["pt-pop-01-trainer.png", "pt-pop-02-campaign.png"];
-        if (n === 1 && sheets[0].classList.contains("sheet--campaign")) return ["pt-pop-campaign.png"];
-        return ["pt-pop-trainer.png"];
-      }
-
-      function pngFailMessage() {
-        if (/^file:/i.test(location.protocol || "")) {
-          return "PNGの保存に失敗しました\n\nこのHTMLを file で開いたままだと QR やロゴ画像の読み込みがブラウザにブロックされることがあります\n\nこのフォルダで次を実行し ブラウザから http://localhost:8765/ でこのファイルを開いてください\n\npython -m http.server 8765\n\nまたは PDF 保存をお試しください";
-        }
-        return "PNGの保存に失敗しました ページを更新するか PDF 保存をお試しください（原因は開発者ツールのコンソールに出ます）";
-      }
-
-      function bindPng() {
-        var btn = document.getElementById(PNG_ID);
-        if (!btn) return;
-        btn.addEventListener("click", function () {
-          var sheets = document.querySelectorAll(".sheet");
-          if (!sheets.length) return;
-          var labels = ["高画質PNG保存", "PNG作成中…"];
-          btn.disabled = true;
-          btn.textContent = labels[1];
-          var libUrl = new URL("./html-to-image.esm.mjs", document.baseURI).href;
-          import(libUrl)
-            .then(function (mod) {
-              var toPng = mod.toPng;
-              var baseOpts = {
-                backgroundColor: "#ffffff",
-                cacheBust: true,
-                skipFonts: true,
-                style: { margin: "0", boxShadow: "none" },
-              };
-              var ratios = [4, 2, 1];
-              function toPngBest(el) {
-                var ri = 0;
-                function tryNext(err) {
-                  if (ri >= ratios.length) return Promise.reject(err || new Error("PNG failed"));
-                  var r = ratios[ri++];
-                  return toPng(el, Object.assign({ pixelRatio: r }, baseOpts)).catch(function (e) {
-                    return tryNext(e);
-                  });
-                }
-                return tryNext(null);
-              }
-              var names = fileNamesForSheets(sheets);
-              var i = 0;
-              function delay(ms) {
-                return new Promise(function (r) { setTimeout(r, ms); });
-              }
-              function next() {
-                if (i >= sheets.length) {
-                  btn.disabled = false;
-                  btn.textContent = labels[0];
-                  return Promise.resolve();
-                }
-                var idx = i;
-                i += 1;
-                return toPngBest(sheets[idx])
-                  .then(function (dataUrl) {
-                    var a = document.createElement("a");
-                    a.href = dataUrl;
-                    a.download = names[idx] || "pt-pop-" + (idx + 1) + ".png";
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    return delay(400);
-                  })
-                  .then(next);
-              }
-              return next();
-            })
-            .catch(function (err) {
-              console.error(err);
-              alert(pngFailMessage());
-              btn.disabled = false;
-              btn.textContent = labels[0];
-            });
-        });
-      }
-
       bindPdf();
-      bindPng();
     })();
   </script>
 </body>

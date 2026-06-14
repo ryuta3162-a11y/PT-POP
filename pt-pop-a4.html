@@ -15,30 +15,18 @@
     }
 
     :root {
-      /* 印刷で薄くなりにくいようコントラスト強め */
       --red: #a5354b;
       --black: #070707;
       --grey-1: #1a1a20;
       --grey-2: #3a3a44;
       --grey-3: #6e6e78;
-      --grey-4: #9a9aa6;
-      --grey-bg: #e6e6ea;
       --white: #ffffff;
-      --pop-cta-to-foot-gap: 3mm;
-      --pop-accent: 3.2mm;
-      --pop-section-border: 1mm solid #070707;
-      --pop-divider: 0.45mm solid var(--grey-3);
-      --pop-pad-x: 6mm;
-      --pop-pad-inset: 3.5mm;
-      --mid-row-min: 13mm;
-      --pop-lower-min-h: 0;
-      --pop-lower-h-print: 142mm;
-      --pop-lower-gap: 3.5mm;
-      --pop-foot-gap: 2mm;
-      --hero-photo-col: 94mm;
-      --elev-soft: none;
-      --elev-card: none;
-      --text-depth: 0 0.2mm 0 rgba(255, 255, 255, 0.9), 0 0.7mm 1.2mm rgba(0, 0, 0, 0.05);
+      --accent: 3.2mm;
+      --pad-x: 6mm;
+      --pad-in: 3.5mm;
+      --section-border: 1mm solid #070707;
+      --divider: 0.45mm solid var(--grey-3);
+      --photo-col: 82mm;
     }
 
     html, body {
@@ -54,534 +42,130 @@
     .sheet {
       width: 210mm;
       height: 297mm;
-      min-height: 297mm;
-      max-height: 297mm;
       margin: 10mm auto;
       background: var(--white);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4mm 16mm rgba(0, 0, 0, 0.12);
       display: flex;
       flex-direction: column;
-    }
-
-    .sheet > .inner {
-      flex: 1 1 auto;
-      min-height: 0;
-    }
-
-    @media print {
-      html, body {
-        width: 210mm;
-        height: 297mm;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #fff !important;
-        overflow: hidden !important;
-      }
-
-      .sheet {
-        box-sizing: border-box;
-        width: 210mm !important;
-        max-width: 210mm !important;
-        height: 297mm !important;
-        min-height: 297mm !important;
-        max-height: 297mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        overflow: hidden !important;
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-        display: flex !important;
-        flex-direction: column !important;
-      }
-
-      .inner {
-        padding: 4mm 6mm 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: var(--pop-foot-gap) !important;
-        min-height: 0 !important;
-      }
-
-      .pop-stack {
-        display: flex !important;
-        flex-direction: column !important;
-        flex: 1 1 auto !important;
-        min-height: 0 !important;
-        gap: 2.5mm !important;
-      }
-
-      .pop-lower {
-        flex: 1 1 auto !important;
-        min-height: 0 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: flex-start !important;
-        gap: 2.5mm !important;
-      }
-
-      .pop-lower > .mid-split,
-      .pop-lower > .cta-shell {
-        flex: 0 0 auto !important;
-        height: auto !important;
-      }
-
-      .hero-row,
-      .mid-panel,
-      .cta-shell {
-        border: var(--pop-section-border) !important;
-        box-shadow: none !important;
-      }
-
-      .hero-row {
-        flex: 0 0 auto !important;
-        max-height: none !important;
-        align-items: stretch !important;
-        grid-template-columns: minmax(0, 1fr) var(--hero-photo-col);
-        gap: 0 !important;
-        padding: 0 !important;
-      }
-
-      .head-stack {
-        padding: 2.8mm 2.5mm 2.8mm calc(var(--pop-accent) + var(--pop-pad-inset)) !important;
-        border-right: var(--pop-divider) !important;
-      }
-
-      .name-profile {
-        margin-top: 2.8mm !important;
-      }
-
-      .name-block {
-        padding-top: 1.8mm !important;
-      }
-
-      .name-big3 {
-        margin-top: 1.8mm !important;
-        padding: 1.8mm 0 2mm !important;
-      }
-
-      .name-big3-label {
-        margin-bottom: 1.2mm !important;
-        padding-bottom: 1mm !important;
-        border-bottom-width: 0.45mm !important;
-        font-size: 11.5pt !important;
-        line-height: 1.15 !important;
-      }
-
-      .name-big3-list {
-        gap: 0.6mm !important;
-      }
-
-      .name-big3-list li {
-        font-size: 10.5pt !important;
-        line-height: 1.2 !important;
-      }
-
-      .lift-num {
-        font-size: 12.5pt !important;
-      }
-
-      .lift-unit {
-        font-size: 8pt !important;
-      }
-
-      .photo-frame {
-        width: fit-content;
-        max-width: var(--hero-photo-col);
-        background: transparent !important;
-        border: none !important;
-      }
-
-      .photo-hero {
-        padding: 2.5mm 3mm 2.5mm 2mm !important;
-      }
-
-      .photo-frame img {
-        max-width: var(--hero-photo-col);
-        max-height: 88mm;
-        border: none !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        background: #fff !important;
-      }
-
-      .cta-shell {
-        display: grid !important;
-        grid-template-columns: 1fr 32mm !important;
-        align-items: center !important;
-        padding: 2.8mm 3.8mm 2.8mm calc(var(--pop-accent) + 3.5mm) !important;
-      }
-
-      .cta {
-        display: contents !important;
-      }
-
-      .brand-line {
-        font-size: 24pt !important;
-        line-height: 1.18 !important;
-      }
-
-      .role {
-        font-size: 17.5pt !important;
-        margin-top: 2mm !important;
-      }
-
-      .name-pair .name-sei,
-      .name-pair .name-mei {
-        font-size: 36pt !important;
-        line-height: 1.06 !important;
-      }
-
-      .name-pair .kana-sei,
-      .name-pair .kana-mei {
-        font-size: 10.5pt !important;
-      }
-
-      .name-pair {
-        gap: 1mm !important;
-      }
-
-      .mid-panel {
-        grid-template-rows: auto repeat(3, auto) !important;
-        align-content: start !important;
-        height: auto !important;
-      }
-
-      .mid-h {
-        font-size: 14pt !important;
-        min-height: 9mm !important;
-        padding: 3mm var(--pop-pad-inset) 2.8mm !important;
-      }
-
-      .mid-h--reco {
-        padding: 3mm var(--pop-pad-inset) 2.8mm calc(var(--pop-accent) + var(--pop-pad-inset)) !important;
-      }
-
-      .mid-h--price,
-      .mid-cell--price {
-        padding-right: 4mm !important;
-      }
-
-      .mid-cell {
-        min-height: 12mm !important;
-        font-size: 12.5pt !important;
-        padding: 2.8mm var(--pop-pad-inset) 3mm !important;
-      }
-
-      .mid-cell--reco {
-        padding: 2.8mm 2mm 3mm calc(var(--pop-accent) + var(--pop-pad-inset)) !important;
-        gap: 2.8mm !important;
-      }
-
-      .yen {
-        font-size: 23pt !important;
-        text-shadow: none;
-      }
-
-      .tax {
-        font-size: 11.5pt !important;
-      }
-
-      .duration {
-        font-size: 16pt !important;
-      }
-
-      .cta-shell {
-        box-shadow: none;
-        border: var(--pop-section-border) !important;
-      }
-
-      .mid-panel {
-        border: var(--pop-section-border) !important;
-      }
-
-      .cta-copy {
-        gap: 1.8mm !important;
-      }
-
-      .cta-footnote {
-        margin: 0 !important;
-        padding-top: 1.8mm !important;
-        line-height: 1.42 !important;
-        font-size: 10pt !important;
-      }
-
-      .cta-lead {
-        font-size: 14pt !important;
-        line-height: 1.38 !important;
-        text-shadow: none;
-      }
-
-      .cta-sub {
-        font-size: 11.5pt !important;
-        line-height: 1.4 !important;
-      }
-
-      .qr-slot {
-        width: 32mm !important;
-        height: 32mm !important;
-        padding: 2mm !important;
-      }
-
-      .brand-foot {
-        box-sizing: border-box;
-        width: calc(100% + 12mm) !important;
-        max-width: none !important;
-        margin-left: -6mm !important;
-        margin-right: -6mm !important;
-        min-height: 10mm !important;
-        padding: 1.3mm 6mm 1.5mm !important;
-      }
-
-      .brand-foot img {
-        max-height: 8.5mm !important;
-      }
-
-      .pdf-toolbar {
-        display: none !important;
-      }
-    }
-
-    /* 画面用：PDF保存ボタン（印刷時は非表示） */
-    .pdf-toolbar {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 9999;
-      width: min(92vw, 320px);
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.97);
-      border: 0.5mm solid var(--grey-4);
-      border-radius: 2mm;
-      box-shadow: 0 2mm 12mm rgba(0, 0, 0, 0.12);
-    }
-
-    .pdf-btn {
-      width: 100%;
-      padding: 10px 12px;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      color: var(--white);
-      background: var(--red);
-      border: none;
-      border-radius: 1.5mm;
-      font-family: inherit;
-    }
-
-    .pdf-btn:hover {
-      filter: brightness(1.06);
-    }
-
-    .pdf-hint {
-      margin: 8px 0 0;
-      font-size: 10.5px;
-      line-height: 1.5;
-      color: var(--grey-2);
-      font-weight: 500;
-    }
-
-    .pdf-hint strong {
-      color: var(--grey-1);
+      overflow: hidden;
+      box-shadow: 0 4mm 16mm rgba(0, 0, 0, 0.12);
     }
 
     .inner {
       flex: 1 1 auto;
-      min-height: 0;
-      padding: 5mm var(--pop-pad-x) 0;
       display: flex;
       flex-direction: column;
-      gap: var(--pop-foot-gap);
-      position: relative;
-      z-index: 2;
-      overflow: hidden;
-    }
-
-    /* 上段は自然な高さ、中下段が残り */
-    .pop-stack {
-      flex: 1 1 auto;
+      gap: 3.5mm;
+      padding: 5mm var(--pad-x) 0;
       min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--pop-lower-gap);
     }
 
-    .pop-lower {
-      flex: 1 1 auto;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: var(--pop-lower-gap);
-      width: 100%;
-    }
-
-    .pop-lower > .mid-split,
-    .pop-lower > .cta-shell {
-      flex: 0 0 auto;
-      width: 100%;
-    }
-
-    /* 上段・中段・下段：太めの黒枠で四角く区切る（赤ラインは枠の内側） */
-    .hero-row,
-    .mid-panel,
-    .cta-shell {
+    /* 共通：黒枠＋左赤ライン */
+    .section-box {
       position: relative;
       background: var(--white);
-      border: var(--pop-section-border);
+      border: var(--section-border);
       border-radius: 1.5mm;
-      box-shadow: none;
-      overflow: hidden;
+      overflow: visible;
     }
 
-    .hero-row::before,
-    .mid-panel::before,
-    .cta-shell::before {
+    .section-box::before {
       content: "";
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
-      width: var(--pop-accent);
+      width: var(--accent);
       background: var(--red);
       z-index: 1;
       pointer-events: none;
     }
 
+    .section-box > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── 上段 ── */
     .hero-row {
       flex: 0 0 auto;
-      width: 100%;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) var(--hero-photo-col);
-      gap: 0;
+      grid-template-columns: minmax(0, 1fr) var(--photo-col);
       align-items: stretch;
-      padding: 0;
     }
 
     .head-stack {
-      position: relative;
-      z-index: 2;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-self: stretch;
-      min-height: 0;
-      text-align: left;
-      padding: 3.5mm 3mm 3.5mm calc(var(--pop-accent) + var(--pop-pad-inset));
-      border-right: var(--pop-divider);
+      justify-content: center;
+      padding: 3.5mm 3mm 3.5mm calc(var(--accent) + var(--pad-in));
+      border-right: var(--divider);
       font-feature-settings: "palt" 1;
     }
 
     .brand-line {
       margin: 0;
-      font-size: 29pt;
+      font-size: 26pt;
       font-weight: 900;
       letter-spacing: 0.1em;
-      color: var(--black);
-      line-height: 1.22;
-      text-shadow: var(--text-depth);
-    }
-
-    .brand-line .num {
-      letter-spacing: 0.04em;
+      line-height: 1.2;
     }
 
     .role {
-      margin: 3mm 0 0;
-      font-size: 22pt;
+      margin: 2.5mm 0 0;
+      font-size: 18pt;
       font-weight: 800;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       color: var(--grey-1);
-      line-height: 1.35;
     }
 
-    /* 氏名＋BIG3：赤横線・縦仕切りまで幅を揃える */
     .name-profile {
-      margin: 4mm calc(-1 * 3mm) 0 calc(-1 * (var(--pop-accent) + var(--pop-pad-inset));
-      padding: 0 3mm 0 calc(var(--pop-accent) + var(--pop-pad-inset));
-      align-self: stretch;
-      width: auto;
+      margin: 3.5mm calc(-1 * 3mm) 0 calc(-1 * (var(--accent) + var(--pad-in)));
+      padding: 0 3mm 0 calc(var(--accent) + var(--pad-in));
       border-top: 0.65mm solid var(--red);
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      box-sizing: border-box;
-    }
-
-    .name-block {
-      margin: 0;
-      padding: 3mm 0 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      max-width: 100%;
     }
 
     .name-grid {
       display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      justify-content: flex-start;
       gap: 0.36em;
+      padding-top: 2.5mm;
     }
 
     .name-pair {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 1.4mm;
+      gap: 1.2mm;
     }
 
     .name-pair .name-sei,
     .name-pair .name-mei {
-      margin: 0;
-      font-size: 44pt;
+      font-size: 40pt;
       font-weight: 700;
       letter-spacing: 0.08em;
       line-height: 1.08;
-      color: var(--black);
-      white-space: nowrap;
-      text-shadow: var(--text-depth);
     }
 
     .name-pair .kana-sei,
     .name-pair .kana-mei {
-      margin: 0;
-      padding-left: 2.4mm;
-      font-size: 13pt;
+      padding-left: 2mm;
+      font-size: 12pt;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      line-height: 1.25;
       color: var(--grey-1);
-      white-space: nowrap;
     }
 
     .name-big3 {
-      margin: 2.8mm 0 0;
-      width: 100%;
-      padding: 3mm 0 3.5mm;
-      border-top: var(--pop-divider);
-      background: transparent;
-      box-sizing: border-box;
+      margin-top: 2.5mm;
+      padding: 2.5mm 0 2mm;
+      border-top: var(--divider);
     }
 
     .name-big3-label {
-      margin: 0 0 2.5mm;
-      padding: 0 0 1.8mm;
-      border-bottom: 0.55mm solid var(--red);
-      font-size: 15pt;
+      margin: 0 0 2mm;
+      padding-bottom: 1.5mm;
+      border-bottom: 0.5mm solid var(--red);
+      font-size: 14pt;
       font-weight: 900;
-      letter-spacing: 0.1em;
-      line-height: 1.2;
       color: var(--red);
-      text-align: left;
+      letter-spacing: 0.08em;
     }
 
     .name-big3-list {
@@ -590,162 +174,107 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 1.6mm;
+      gap: 1.4mm;
     }
 
     .name-big3-list li {
       display: flex;
-      align-items: baseline;
       justify-content: space-between;
-      gap: 2mm;
-      font-size: 13.5pt;
+      align-items: baseline;
+      font-size: 12.5pt;
       font-weight: 700;
-      letter-spacing: 0.02em;
-      line-height: 1.3;
-      color: var(--black);
     }
 
-    .name-big3-list .lift-name {
-      flex: 1 1 auto;
-      min-width: 0;
-      font-size: 1em;
+    .lift-name {
       color: var(--grey-1);
       font-weight: 800;
     }
 
     .lift-weight {
-      flex-shrink: 0;
       display: inline-flex;
       align-items: baseline;
       gap: 0.15em;
     }
 
     .lift-num {
-      font-size: 17pt;
+      font-size: 16pt;
       font-weight: 900;
-      letter-spacing: 0.03em;
-      line-height: 1;
       color: var(--red);
     }
 
     .lift-unit {
-      font-size: 10pt;
+      font-size: 9.5pt;
       font-weight: 800;
-      letter-spacing: 0.05em;
-      color: var(--grey-1);
+      color: var(--grey-2);
     }
 
-    /* 写真：画像の矩形に合わせて表示 */
     .photo-hero {
       margin: 0;
-      padding: 3mm 3.5mm 3mm 2.5mm;
+      padding: 2.5mm;
       display: flex;
       align-items: center;
       justify-content: center;
-      align-self: stretch;
-      min-height: 0;
       background: var(--white);
     }
 
-    .photo-frame {
+    .photo-hero img {
       display: block;
-      line-height: 0;
-      width: fit-content;
-      max-width: var(--hero-photo-col);
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      padding: 0;
-      overflow: visible;
-    }
-
-    .photo-frame img {
-      display: block;
+      max-width: 100%;
+      max-height: 92mm;
       width: auto;
       height: auto;
-      max-width: var(--hero-photo-col);
-      max-height: 100mm;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-      background-color: #ffffff;
       object-fit: contain;
-      object-position: center center;
-      vertical-align: top;
     }
 
-    .mid-split {
-      width: 100%;
-    }
-
-    /* 2列50%・行は内容の高さ（表としてコンパクト） */
+    /* ── 中段（2列表） ── */
     .mid-panel {
+      flex: 0 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto repeat(3, auto);
-      align-content: start;
-      width: 100%;
-      height: auto;
-      min-height: 0;
-    }
-
-    .mid-h,
-    .mid-cell {
-      margin: 0;
-      box-sizing: border-box;
-      position: relative;
-      z-index: 2;
     }
 
     .mid-h {
-      padding: 4mm var(--pop-pad-inset) 3.5mm;
-      font-size: 16pt;
+      margin: 0;
+      padding: 3.5mm var(--pad-in) 3mm;
+      font-size: 15pt;
       font-weight: 800;
-      letter-spacing: 0.1em;
-      line-height: 1.26;
-      color: var(--black);
+      letter-spacing: 0.06em;
+      border-bottom: var(--divider);
       display: flex;
       align-items: flex-end;
-      min-height: 11mm;
-      border-bottom: var(--pop-divider);
-      text-shadow: var(--text-depth);
+      min-height: 10mm;
     }
 
     .mid-h--reco {
       grid-column: 1;
       grid-row: 1;
-      padding: 4mm var(--pop-pad-inset) 3.5mm calc(var(--pop-accent) + var(--pop-pad-inset));
-      border-right: var(--pop-divider);
+      padding-left: calc(var(--accent) + var(--pad-in));
+      border-right: var(--divider);
     }
 
     .mid-h--price {
       grid-column: 2;
       grid-row: 1;
-      padding-right: 4.5mm;
     }
 
     .mid-cell {
+      margin: 0;
       display: flex;
       align-items: center;
-      min-height: var(--mid-row-min);
-      padding: 3.5mm var(--pop-pad-inset) 3.8mm;
-      border-bottom: var(--pop-divider);
-    }
-
-    .mid-panel > .mid-cell:nth-child(7),
-    .mid-panel > .mid-cell:nth-child(8) {
-      border-bottom: none;
+      padding: 3mm var(--pad-in);
+      border-bottom: var(--divider);
+      min-height: 12mm;
     }
 
     .mid-cell--reco {
       grid-column: 1;
-      gap: 3.5mm;
-      padding: 3.5mm 2.5mm 3.8mm calc(var(--pop-accent) + var(--pop-pad-inset));
-      font-size: 14pt;
-      line-height: 1.32;
+      gap: 3mm;
+      padding-left: calc(var(--accent) + var(--pad-in));
+      border-right: var(--divider);
+      font-size: 13pt;
       font-weight: 700;
-      color: var(--black);
-      border-right: var(--pop-divider);
+      line-height: 1.35;
     }
 
     .mid-panel > .mid-cell--reco:nth-child(3) { grid-row: 2; }
@@ -756,199 +285,213 @@
       grid-column: 2;
       justify-content: space-between;
       align-items: baseline;
-      gap: 1.5mm;
-      padding-left: 2mm;
-      padding-right: 4.5mm;
+      font-size: 13pt;
     }
 
     .mid-panel > .mid-cell--price:nth-child(4) { grid-row: 2; }
     .mid-panel > .mid-cell--price:nth-child(6) { grid-row: 3; }
     .mid-panel > .mid-cell--price:nth-child(8) { grid-row: 4; }
 
+    .mid-panel > .mid-cell:nth-child(7),
+    .mid-panel > .mid-cell:nth-child(8) {
+      border-bottom: none;
+    }
+
     .reco-mark {
       flex-shrink: 0;
-      width: 7mm;
-      height: 7mm;
+      width: 6.5mm;
+      height: 6.5mm;
       position: relative;
+      background: #000;
       border-radius: 0.35mm;
-      background: #000000;
-      border: 0.15mm solid #3c3c44;
     }
 
     .reco-mark::after {
       content: "";
       position: absolute;
-      left: 1.65mm;
-      top: 1.05mm;
-      width: 3.1mm;
-      height: 1.55mm;
-      border-left: 0.78mm solid var(--white);
-      border-bottom: 0.78mm solid var(--white);
+      left: 1.5mm;
+      top: 1mm;
+      width: 2.8mm;
+      height: 1.4mm;
+      border-left: 0.7mm solid var(--white);
+      border-bottom: 0.7mm solid var(--white);
       transform: rotate(-46deg);
     }
 
     .duration {
-      font-size: 18.5pt;
+      font-size: 16pt;
       font-weight: 900;
       color: var(--grey-1);
-      letter-spacing: 0.05em;
-      flex-shrink: 0;
     }
 
     .price-amount {
       display: flex;
       align-items: baseline;
-      flex-wrap: nowrap;
-      gap: 0.6mm;
-      min-width: 0;
+      gap: 0.5mm;
     }
 
     .yen {
-      font-size: 26pt;
+      font-size: 22pt;
       font-weight: 900;
-      letter-spacing: 0.03em;
       color: var(--red);
       line-height: 1;
-      text-shadow:
-        0 0.15mm 0 rgba(255, 255, 255, 0.55),
-        0 0.9mm 0 rgba(165, 53, 75, 0.12);
     }
 
     .tax {
-      font-size: 13pt;
-      color: var(--grey-2);
+      font-size: 11pt;
       font-weight: 700;
-      margin-left: 0.3mm;
-      letter-spacing: 0.03em;
-      flex-shrink: 0;
+      color: var(--grey-2);
     }
 
+    /* ── 下段（LINE） ── */
     .cta-shell {
-      margin: 0;
-      padding: 3.5mm 4mm 3.5mm calc(var(--pop-accent) + 3.5mm);
-      box-sizing: border-box;
-      width: 100%;
-      height: auto;
-      min-height: 0;
+      flex: 0 0 auto;
       display: grid;
-      grid-template-columns: 1fr 34mm;
+      grid-template-columns: 1fr 36mm;
       align-items: center;
       gap: 3.5mm;
-    }
-
-    .cta-shell .cta-copy,
-    .cta-shell .qr-wrap {
-      position: relative;
-      z-index: 2;
-    }
-
-    .cta {
-      display: contents;
-    }
-
-    .cta-copy {
-      grid-column: 1;
-      align-self: center;
-      min-width: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 2.5mm;
+      padding: 3.5mm 4mm 3.5mm calc(var(--accent) + var(--pad-in));
     }
 
     .cta-lead {
       margin: 0;
-      font-size: 18.5pt;
-      line-height: 1.45;
+      font-size: 16pt;
       font-weight: 800;
-      color: var(--black);
-      letter-spacing: 0.03em;
-      text-shadow: var(--text-depth);
-    }
-
-    .cta-sub {
-      margin: 0;
-      font-size: 15pt;
-      line-height: 1.5;
-      font-weight: 700;
-      color: var(--grey-1);
-      letter-spacing: 0.02em;
-    }
-
-    .cta-footnote {
-      margin: 0;
-      padding: 2.5mm 0 0;
-      align-self: stretch;
-      width: 100%;
-      border-top: var(--pop-divider);
-      font-size: 12pt;
-      line-height: 1.5;
-      font-weight: 700;
-      color: var(--grey-2);
-      letter-spacing: 0.02em;
+      line-height: 1.4;
     }
 
     .cta-lead strong {
       color: var(--red);
-      font-weight: 900;
     }
 
-    .qr-wrap {
-      grid-column: 2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      align-self: center;
-      justify-self: center;
+    .cta-sub {
+      margin: 2mm 0 0;
+      font-size: 13pt;
+      font-weight: 700;
+      color: var(--grey-1);
+      line-height: 1.45;
+    }
+
+    .cta-footnote {
+      margin: 2.5mm 0 0;
+      padding-top: 2mm;
+      border-top: var(--divider);
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--grey-2);
+      line-height: 1.45;
     }
 
     .qr-slot {
-      width: 34mm;
-      height: 34mm;
-      padding: 2.5mm;
-      background: var(--white);
+      width: 36mm;
+      height: 36mm;
+      padding: 2mm;
       border: 0.75mm solid var(--red);
       border-radius: 1.5mm;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      box-shadow: none;
     }
 
     .qr-slot img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 1mm;
     }
 
+    /* ── フッター ── */
     .brand-foot {
       flex-shrink: 0;
-      margin-top: 0;
-      margin-left: calc(-1 * var(--pop-pad-x));
-      margin-right: calc(-1 * var(--pop-pad-x));
-      margin-bottom: 0;
-      padding: 2.5mm var(--pop-pad-x) 2.8mm;
-      min-height: 14mm;
-      box-sizing: border-box;
+      margin: 0 calc(-1 * var(--pad-x));
+      padding: 2.5mm var(--pad-x) 2.8mm;
+      min-height: 13mm;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--red);
-      text-align: center;
-      flex-shrink: 0;
-      box-shadow: inset 0 0.4mm 0 rgba(255, 255, 255, 0.12);
     }
 
     .brand-foot img {
-      display: block;
-      margin: 0;
       max-width: 74mm;
-      height: auto;
-      max-height: 11.5mm;
+      max-height: 10mm;
       object-fit: contain;
+    }
+
+    /* ── PDFボタン ── */
+    .pdf-toolbar {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      width: min(92vw, 320px);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.97);
+      border: 0.5mm solid var(--grey-3);
+      border-radius: 2mm;
+      box-shadow: 0 2mm 12mm rgba(0, 0, 0, 0.12);
+    }
+
+    .pdf-btn {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--white);
+      background: var(--red);
+      border: none;
+      border-radius: 1.5mm;
+      font-family: inherit;
+    }
+
+    .pdf-hint {
+      margin: 8px 0 0;
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: var(--grey-2);
+    }
+
+    @media print {
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+      }
+
+      .sheet {
+        width: 210mm !important;
+        height: 297mm !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      .inner {
+        padding: 4mm var(--pad-x) 0 !important;
+        gap: 3mm !important;
+      }
+
+      .brand-line { font-size: 22pt !important; }
+      .role { font-size: 15pt !important; }
+      .name-pair .name-sei,
+      .name-pair .name-mei { font-size: 34pt !important; }
+      .name-big3-label { font-size: 12pt !important; }
+      .name-big3-list li { font-size: 11pt !important; }
+      .lift-num { font-size: 14pt !important; }
+      .photo-hero img { max-height: 80mm !important; }
+      .mid-h { font-size: 13pt !important; min-height: 9mm !important; }
+      .mid-cell { min-height: 11mm !important; padding: 2.5mm var(--pad-in) !important; }
+      .mid-cell--reco { font-size: 11.5pt !important; }
+      .yen { font-size: 19pt !important; }
+      .duration { font-size: 14pt !important; }
+      .cta-lead { font-size: 13.5pt !important; }
+      .cta-sub { font-size: 11pt !important; }
+      .cta-footnote { font-size: 9.5pt !important; }
+      .qr-slot { width: 32mm !important; height: 32mm !important; }
+      .brand-foot { min-height: 11mm !important; }
+      .brand-foot img { max-height: 8.5mm !important; }
+      .pdf-toolbar { display: none !important; }
     }
   </style>
 </head>
@@ -956,27 +499,25 @@
   <div class="pdf-toolbar" role="region" aria-label="高画質保存">
     <button type="button" class="pdf-btn" id="btn-save-pdf">高画質で保存（PDF）</button>
     <p class="pdf-hint">
-      押すと印刷画面が開きます。<strong>送信先：PDFに保存</strong>・<strong>余白：なし</strong>・<strong>背景のグラフィック：オン</strong>・<strong>倍率：100%</strong>にしてください。文字はベクターでくっきり、A4<strong>1枚</strong>に収まるよう調整しています。
+      押すと印刷画面が開きます。<strong>送信先：PDFに保存</strong>・<strong>余白：なし</strong>・<strong>背景のグラフィック：オン</strong>・<strong>倍率：100%</strong>にしてください。
     </p>
   </div>
+
   <article class="sheet">
     <div class="inner">
-      <div class="pop-stack">
-      <div class="hero-row">
+      <section class="hero-row section-box">
         <header class="head-stack">
           <p class="brand-line">JOYFIT<span class="num">24</span>　経堂</p>
           <p class="role">パーソナルトレーナー</p>
           <div class="name-profile">
-            <div class="name-block">
-              <div class="name-grid" aria-label="氏名">
-                <div class="name-pair">
-                  <span class="name-sei">日下</span>
-                  <span class="kana-sei">クサカ</span>
-                </div>
-                <div class="name-pair">
-                  <span class="name-mei">竜太</span>
-                  <span class="kana-mei">リュウタ</span>
-                </div>
+            <div class="name-grid" aria-label="氏名">
+              <div class="name-pair">
+                <span class="name-sei">日下</span>
+                <span class="kana-sei">クサカ</span>
+              </div>
+              <div class="name-pair">
+                <span class="name-mei">竜太</span>
+                <span class="kana-mei">リュウタ</span>
               </div>
             </div>
             <div class="name-big3" aria-label="BIG3最高記録">
@@ -990,75 +531,60 @@
           </div>
         </header>
         <figure class="photo-hero" aria-label="トレーナー">
-          <div class="photo-frame">
-            <img src="kusaka-ry-04.jpg" alt="" />
-          </div>
+          <img src="kusaka-ry-04.jpg" alt="" />
         </figure>
-      </div>
+      </section>
 
-      <div class="pop-lower">
-      <div class="mid-split" aria-label="オススメと料金">
-        <div class="mid-panel" role="group">
-          <h2 class="mid-h mid-h--reco">こんな方にオススメです</h2>
-          <h2 class="mid-h mid-h--price">料金（税込）</h2>
-          <div class="mid-cell mid-cell--reco">
-            <span class="reco-mark" aria-hidden="true"></span>
-            <span>BIG3の重量を伸ばしたい</span>
-          </div>
-          <div class="mid-cell mid-cell--price">
-            <span class="duration">30分</span>
-            <span class="price-amount"><span class="yen">3,300円</span><span class="tax">税込</span></span>
-          </div>
-          <div class="mid-cell mid-cell--reco">
-            <span class="reco-mark" aria-hidden="true"></span>
-            <span>フリーウエイトを教えてほしい</span>
-          </div>
-          <div class="mid-cell mid-cell--price">
-            <span class="duration">60分</span>
-            <span class="price-amount"><span class="yen">6,600円</span><span class="tax">税込</span></span>
-          </div>
-          <div class="mid-cell mid-cell--reco">
-            <span class="reco-mark" aria-hidden="true"></span>
-            <span>筋肉量を増やしたい</span>
-          </div>
-          <div class="mid-cell mid-cell--price">
-            <span class="duration">90分</span>
-            <span class="price-amount"><span class="yen">9,900円</span><span class="tax">税込</span></span>
-          </div>
+      <section class="mid-panel section-box" aria-label="オススメと料金">
+        <h2 class="mid-h mid-h--reco">こんな方にオススメです</h2>
+        <h2 class="mid-h mid-h--price">料金（税込）</h2>
+        <div class="mid-cell mid-cell--reco">
+          <span class="reco-mark" aria-hidden="true"></span>
+          <span>BIG3の重量を伸ばしたい</span>
         </div>
-      </div>
-
-        <div class="cta-shell">
-          <div class="cta">
-            <div class="cta-copy">
-              <p class="cta-lead">お申し込みは<strong>LINEの友だち追加</strong>から</p>
-              <p class="cta-sub">QRを読み取り、友だち追加後にお申し込みください</p>
-              <p class="cta-footnote">LINE・GoogleカレンダーをまとめたQRです。<br />友だち追加のみですと見逃してしまうので<br />必ず挨拶の一言やスタンプ等お送りくださいませ</p>
-            </div>
-            <div class="qr-wrap">
-              <div class="qr-slot" id="qr-slot">
-                <img src="QR_734379.png" alt="LINE友だち追加用QR" />
-              </div>
-            </div>
-          </div>
+        <div class="mid-cell mid-cell--price">
+          <span class="duration">30分</span>
+          <span class="price-amount"><span class="yen">3,300円</span><span class="tax">税込</span></span>
         </div>
-      </div>
+        <div class="mid-cell mid-cell--reco">
+          <span class="reco-mark" aria-hidden="true"></span>
+          <span>フリーウエイトを教えてほしい</span>
+        </div>
+        <div class="mid-cell mid-cell--price">
+          <span class="duration">60分</span>
+          <span class="price-amount"><span class="yen">6,600円</span><span class="tax">税込</span></span>
+        </div>
+        <div class="mid-cell mid-cell--reco">
+          <span class="reco-mark" aria-hidden="true"></span>
+          <span>筋肉量を増やしたい</span>
+        </div>
+        <div class="mid-cell mid-cell--price">
+          <span class="duration">90分</span>
+          <span class="price-amount"><span class="yen">9,900円</span><span class="tax">税込</span></span>
+        </div>
+      </section>
 
-      </div>
+      <section class="cta-shell section-box" aria-label="お申し込み">
+        <div class="cta-copy">
+          <p class="cta-lead">お申し込みは<strong>LINEの友だち追加</strong>から</p>
+          <p class="cta-sub">QRを読み取り、友だち追加後にお申し込みください</p>
+          <p class="cta-footnote">LINE・GoogleカレンダーをまとめたQRです。<br />友だち追加のみですと見逃してしまうので<br />必ず挨拶の一言やスタンプ等お送りくださいませ</p>
+        </div>
+        <div class="qr-slot">
+          <img src="QR_734379.png" alt="LINE友だち追加用QR" />
+        </div>
+      </section>
+
       <footer class="brand-foot" aria-label="JOYFIT">
         <img src="JOYLOGO%20.png" alt="JOYFIT24" />
       </footer>
     </div>
   </article>
+
   <script>
-    (function () {
-      var btn = document.getElementById("btn-save-pdf");
-      if (btn) {
-        btn.addEventListener("click", function () {
-          window.print();
-        });
-      }
-    })();
+    document.getElementById("btn-save-pdf").addEventListener("click", function () {
+      window.print();
+    });
   </script>
 </body>
 </html>

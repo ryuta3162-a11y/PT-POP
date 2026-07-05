@@ -12,12 +12,15 @@
     :root {
       --red: #c21632;
       --red-dark: #9a1128;
+      --red-tint: rgba(194, 22, 50, 0.07);
+      --red-tint-border: rgba(194, 22, 50, 0.22);
       --black: #0a0a0a;
       --ink: #141414;
       --grey: #5a5a5a;
       --muted: #888;
-      --line: #e8e8e8;
-      --white: #fff;
+      --line: #e0e0e0;
+      --white: #ffffff;
+      --canvas: #f7f7f7;
       --accent: var(--red);
       --max: 720px;
       --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
@@ -27,15 +30,24 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+    html, body {
+      background: #ffffff;
+    }
     body {
       margin: 0;
-      font-family: "Noto Sans JP", sans-serif;
+      font-family: inherit;
       font-weight: 700;
       color: var(--ink);
-      background: var(--white);
+      background: #ffffff;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, p, a, li, span, em, strong, small, button {
+      font-family: inherit;
     }
     a { color: inherit; text-decoration: none; }
 
@@ -51,7 +63,9 @@
     .page {
       max-width: var(--max);
       margin: 0 auto;
-      background: var(--white);
+      background: var(--canvas);
+      border: 2px solid var(--black);
+      border-radius: 0;
       overflow: hidden;
     }
 
@@ -67,13 +81,66 @@
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { animation: none; }
-      .shot:hover, .reason:hover, .panel:hover { transform: none; }
       .reason:hover .reason-photo img { transform: none; }
     }
 
-    .sec { padding: 36px 18px; }
-    .sec--bg { background: var(--white); }
-    .sec + .sec { border-top: 1px solid var(--line); }
+    .sec { padding: 36px 18px; background: var(--canvas); }
+    .sec--bg { background: var(--canvas); }
+    .sec--white { background: #ffffff; }
+    .sec + .sec { border-top: 1px solid #ebebeb; }
+
+    /* Canvaグラフィック：余白を持たせた編集レイアウト */
+    .sec--media {
+      padding: 32px 26px 36px;
+    }
+    .sec--media .sec-title {
+      margin-bottom: 0;
+    }
+    .sec--media .sec-title::after {
+      content: "";
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--red);
+      margin: 14px auto 22px;
+    }
+    .media-wrap {
+      width: min(92%, 580px);
+      margin: 0 auto;
+    }
+    .media-wrap--hero {
+      width: min(94%, 620px);
+    }
+    .media-stack {
+      display: grid;
+      gap: 18px;
+      width: min(92%, 580px);
+      margin: 0 auto;
+    }
+    .media-item {
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      line-height: 0;
+      overflow: hidden;
+    }
+    .media-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0;
+    }
+    .shot-note,
+    .map-note {
+      width: min(92%, 580px);
+      margin: 16px auto 0;
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
     .sec-label {
       margin: 0 0 8px;
       text-align: center;
@@ -97,16 +164,11 @@
     }
 
     .panel {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 10px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
       overflow: hidden;
-      box-shadow: var(--shadow-card);
-      transition: transform .35s ease, box-shadow .35s ease;
-    }
-    .panel:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lift);
+      box-shadow: none;
     }
     .panel img { width: 100%; height: auto; }
 
@@ -116,15 +178,15 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      min-height: 58px;
-      border-radius: 8px;
-      font-size: 1.08rem;
-      font-weight: 800;
+      min-height: 64px;
+      border-radius: 0;
+      font-size: 1.12rem;
+      font-weight: 900;
       text-align: center;
       line-height: 1.25;
-      padding: 12px 16px;
-      border: 1.5px solid transparent;
-      transition: opacity .15s;
+      padding: 14px 16px;
+      border: 2px solid transparent;
+      transition: transform .12s ease, box-shadow .12s ease;
     }
     .btn small {
       font-size: .82rem;
@@ -134,209 +196,148 @@
     }
     .btn-primary {
       background: var(--black);
-      color: var(--white);
+      color: #ffffff;
+      box-shadow: 0 4px 0 #333;
     }
-    .btn-primary:active { opacity: .85; }
-    .btn-secondary {
-      background: var(--white);
-      color: var(--black);
-      border-color: var(--black);
+    .btn-primary:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #333;
     }
     .btn-accent {
       background: var(--red);
-      color: var(--white);
+      color: #ffffff;
+      border-color: var(--red-dark);
+      box-shadow: 0 5px 0 var(--red-dark), 0 10px 24px rgba(194,22,50,.22);
     }
-    .btn-accent:active { opacity: .88; }
+    .btn-accent:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 var(--red-dark);
+    }
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--black);
+      border-color: var(--black);
+      box-shadow: 0 4px 0 var(--black), 0 8px 20px rgba(0,0,0,.08);
+    }
+    .btn-secondary:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--black);
+    }
     .btn-row { display: grid; gap: 10px; margin-top: 14px; }
-
-    /* ── 緊急帯 ── */
-    .urgent {
-      background: var(--black);
-      color: var(--white);
-      text-align: center;
-      padding: 13px 14px;
-      font-weight: 800;
-      font-size: .98rem;
-      letter-spacing: .04em;
-      border-bottom: 2px solid var(--red);
+    .cta-block .btn-row {
+      gap: 12px;
+      margin-top: 0;
     }
-    .urgent strong { color: var(--red); font-weight: 900; }
 
-    /* ── ヒーロー：左テキスト / 右画像（Canva） ── */
-    .hero {
-      padding: 0;
-      background: var(--white);
+    /* ── キャンペーン（エディトリアル・施設と同系統） ── */
+    .offer-sec {
+      padding: 40px 0 36px;
+      background: #ffffff;
     }
-    .hero-banner {
+    .offer-sec .facility-head {
+      margin-bottom: 32px;
+    }
+    .offer-item {
       display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-      align-items: stretch;
-      min-height: 260px;
-      background: var(--white);
-      overflow: hidden;
+      gap: 0;
     }
-    .hero-copy {
+    .offer-panel {
+      padding: 36px 20px 40px;
+      background: var(--canvas);
+      text-align: center;
+    }
+    .offer-price-row {
       display: flex;
-      flex-direction: column;
+      align-items: baseline;
       justify-content: center;
-      padding: 28px 16px 28px 18px;
-      z-index: 2;
+      gap: 10px 14px;
+      flex-wrap: nowrap;
     }
-    .hero-catch {
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .hero-line {
-      display: block;
+    .offer-price-was {
+      font-size: 1.15rem;
       font-weight: 900;
-      line-height: 1.25;
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
       letter-spacing: -.02em;
     }
-    .hero-line--1 {
-      font-size: 1.05rem;
-      color: var(--black);
-    }
-    .hero-line--1 em {
-      font-style: normal;
-      color: var(--red);
-    }
-    .hero-line--2 {
-      font-size: 1.75rem;
-      color: var(--black);
-      margin-top: 4px;
-    }
-    .hero-line--3 {
-      font-size: 1.55rem;
-      color: var(--red);
-    }
-    .hero-visual {
-      position: relative;
-      min-height: 220px;
-      background: var(--white);
-    }
-    .hero-visual img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 55% center;
-    }
-    .hero-visual::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to right,
-        var(--white) 0%,
-        rgba(255,255,255,.92) 8%,
-        rgba(255,255,255,.55) 22%,
-        rgba(255,255,255,.15) 38%,
-        transparent 52%
-      );
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin: 0;
-      padding: 20px 18px 24px;
-      border-top: 1px solid var(--line);
-    }
-    .feature {
-      text-align: center;
-      font-size: .78rem;
+    .offer-price-was small {
+      font-size: .82rem;
       font-weight: 800;
-      line-height: 1.4;
-      color: var(--grey);
-      padding: 12px 4px;
     }
-    .feature-ico {
-      width: 46px;
-      height: 46px;
-      margin: 0 auto 8px;
-      border-radius: 8px;
-      border: 1.5px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .72rem;
+    .offer-price-arrow {
+      font-size: 1.25rem;
       font-weight: 900;
       color: var(--red);
-      background: var(--white);
-      box-shadow: 0 2px 0 #e0e0e0, 0 4px 12px rgba(0,0,0,.06);
+      line-height: 1;
+    }
+    .offer-price-now {
+      font-size: 3.4rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.04em;
+      color: var(--red);
+    }
+    .offer-price-now small {
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+    .offer-tax {
+      margin: 10px 0 0;
+      font-size: .92rem;
+      font-weight: 800;
+      color: var(--grey);
+      letter-spacing: .04em;
+    }
+    .offer-perks {
+      margin: 22px 0 0;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      font-size: .98rem;
+      font-weight: 800;
+      line-height: 1.5;
+      color: var(--black);
+      letter-spacing: .02em;
+    }
+    .offer-perks em {
+      font-style: normal;
+      font-weight: 900;
+      color: var(--red);
     }
 
-    /* ── 料金 ── */
-    .price-wrap { padding: 0 18px 6px; }
-    .price-box {
-      border: 2px solid var(--black);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
+    /* ── 安心バナー（Results・media-stackと同サイズ） ── */
+    .media-stack--teaser {
+      margin: 0 auto 24px;
     }
-    .price-head {
-      background: var(--red);
-      color: var(--white);
-      text-align: center;
-      padding: 14px;
-      font-weight: 900;
-      font-size: 1.05rem;
-      letter-spacing: .1em;
-    }
-    .price-body {
-      padding: 20px 14px 22px;
-      text-align: center;
-      background: var(--white);
-    }
+
+    /* 旧料金ブロック（フッター互換） */
+    .price-wrap,
+    .price-box,
+    .cta-block { display: none; }
     .price-was {
       margin: 0;
       color: var(--muted);
-      font-size: .95rem;
+      font-size: .88rem;
       font-weight: 700;
       text-decoration: line-through;
+      text-align: center;
     }
-    .price-main {
+    .price-tax {
       margin: 6px 0 0;
-      font-size: 3.2rem;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -.03em;
-      color: var(--red);
+      font-size: .82rem;
+      font-weight: 700;
+      color: #aaa;
+      text-align: center;
     }
-    .price-main small { font-size: 1.15rem; font-weight: 900; }
-    .price-tax { margin: 8px 0 0; font-size: .92rem; font-weight: 700; color: var(--grey); }
-    .price-save {
-      display: inline-block;
-      margin-top: 14px;
-      border: 2px solid var(--red);
-      color: var(--red);
-      font-weight: 900;
-      font-size: .92rem;
-      padding: 6px 16px;
-      letter-spacing: .04em;
-      border-radius: 6px;
-    }
-    .cta-block { padding: 8px 18px 28px; }
 
-    /* ── Results ── */
-    .shot-grid { display: grid; gap: 18px; }
+    /* ── Results（Canvaグラフィック） ── */
+    .shot-grid { display: grid; gap: 0; }
     .shot {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 10px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
       overflow: hidden;
-      box-shadow: var(--shadow-card);
-      transition: transform .35s ease, box-shadow .35s ease;
-    }
-    .shot:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lift);
+      box-shadow: none;
     }
     .shot img { width: 100%; height: auto; }
     .shot-note {
@@ -347,155 +348,239 @@
       color: var(--muted);
     }
 
-    /* ── Google口コミ ── */
-    .voice-sec { padding-top: 40px; padding-bottom: 40px; }
-    .voice-title {
+    /* ── お悩み導入（番号＋タイポグラフィ） ── */
+    .worries-sec {
+      padding: 40px 18px 44px;
+      background: #ffffff;
+    }
+    .worries {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .worries__title {
+      margin: 0 0 28px;
+      font-size: 1.55rem;
+      font-weight: 900;
+      line-height: 1.4;
+      letter-spacing: -.03em;
+      text-align: center;
+      color: var(--black);
+    }
+    .worries__title em {
+      font-style: normal;
+      color: var(--red);
+    }
+    .worry-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .worry-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px 16px 14px;
+      background: #ffffff;
+      border: 2px solid var(--black);
+      box-shadow: 0 4px 0 var(--black);
+    }
+    .worry-num {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin: 0 0 22px;
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      background: var(--red);
+      color: #ffffff;
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1;
+      border: 2px solid var(--red-dark);
+      box-shadow: 0 4px 0 var(--red-dark);
+      letter-spacing: 0;
+    }
+    .worry-text {
+      margin: 0;
+      font-size: .95rem;
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: -.02em;
+      color: var(--black);
+    }
+    .worry-text em {
+      font-style: normal;
+      color: var(--red);
+      font-weight: 900;
+    }
+    .worries__lead {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 2px solid var(--black);
+      text-align: center;
+    }
+    .worries__brand {
+      margin: 0 0 10px;
+      font-size: .88rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      color: var(--grey);
+    }
+    .worries__reasons {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 8px;
+      font-size: 1.18rem;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      line-height: 1.3;
+      color: var(--black);
+    }
+    .worries__big3 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.6rem;
+      height: 2.6rem;
+      background: var(--red);
+      color: #ffffff;
+      font-size: 1.75rem;
+      font-weight: 900;
+      line-height: 1;
+      border: 2px solid var(--red-dark);
+      box-shadow: 0 5px 0 var(--red-dark);
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 720px) {
+      .worries-sec { padding: 48px 28px 52px; }
+      .worries__title { font-size: 1.72rem; margin-bottom: 32px; }
+      .worry-list { gap: 12px; }
+      .worry-item { padding: 18px 20px 18px 16px; gap: 16px; }
+      .worry-num { width: 50px; height: 50px; font-size: 1.45rem; }
+      .worry-text { font-size: 1.02rem; }
+      .worries__reasons { font-size: 1.28rem; }
+      .worries__big3 { width: 2.8rem; height: 2.8rem; font-size: 1.9rem; }
+    }
+
+    .voice-sec {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background: #ffffff;
+    }
+    .voice-title {
+      margin: 0 0 8px;
       font-size: 1.55rem;
       font-weight: 900;
       line-height: 1.35;
       letter-spacing: -.02em;
-    }
-    .voice-title::before,
-    .voice-title::after {
-      content: "";
-      width: 10px;
-      height: 10px;
-      background: var(--red);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
-    .voice-title::after {
-      width: 6px;
-      height: 6px;
-      opacity: .6;
+      text-align: center;
     }
     .voice-google-badge {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin: -8px 0 20px;
-      font-size: .8rem;
-      font-weight: 700;
+      gap: 8px;
+      margin: 0 0 22px;
+      font-size: .85rem;
+      font-weight: 800;
       color: var(--grey);
-      letter-spacing: .04em;
+      letter-spacing: .02em;
     }
-    .voice-google-badge svg { flex-shrink: 0; }
+    .voice-google-badge svg { flex-shrink: 0; width: 20px; height: 20px; }
 
-    .reviews { display: grid; gap: 14px; }
+    .reviews { display: grid; gap: 16px; }
     .g-review {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: var(--shadow-card);
+      background: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 0;
+      padding: 20px 18px;
+      box-shadow: 0 1px 2px rgba(60,64,67,.12), 0 2px 8px rgba(60,64,67,.08);
     }
 
     .g-review__head {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f1f3f4;
     }
     .g-review__avatar {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       flex-shrink: 0;
-      object-fit: cover;
-      border: 2px solid #f1f3f4;
-      box-shadow: 0 2px 8px rgba(0,0,0,.1);
-    }
-    .g-review__avatar--kt {
-      background: #f0f0f0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      line-height: 1;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
     }
-    .g-review__avatar--ch {
-      background: #e8e8e8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--grey);
-      letter-spacing: -.02em;
-    }
+    .g-review__avatar--kt { background: var(--red); }
+    .g-review__avatar--ch { background: #5a5a5a; }
     .g-review__meta { flex: 1; min-width: 0; }
-    .g-review__top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
     .g-review__name {
-      margin: 0;
-      font-size: 1.05rem;
+      margin: 0 0 8px;
+      font-size: 1.1rem;
       font-weight: 900;
       color: var(--black);
-      letter-spacing: .02em;
+    }
+    .g-review__rating {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .g-review__stars {
       display: flex;
       align-items: center;
-      gap: 1px;
-      flex-shrink: 0;
+      gap: 2px;
     }
-    .g-review__stars svg {
-      width: 16px;
-      height: 16px;
+    .g-star {
+      width: 22px;
+      height: 22px;
+      display: block;
+      filter: drop-shadow(0 1px 0 #c88700) drop-shadow(0 2px 4px rgba(0,0,0,.18));
     }
-    .g-review__source {
-      display: flex;
+    .g-review__score {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--black);
+      letter-spacing: .02em;
+    }
+    .g-review__via {
+      display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 4px;
-      font-size: .68rem;
+      font-size: .75rem;
+      font-weight: 700;
       color: var(--muted);
-      font-weight: 600;
     }
-    .g-review__source svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .g-review__via svg { width: 14px; height: 14px; }
 
     .g-review__points {
       list-style: none;
       margin: 0;
       padding: 0;
       display: grid;
-      gap: 9px;
+      gap: 10px;
     }
     .g-review__points li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
       font-size: 1rem;
       font-weight: 800;
-      line-height: 1.5;
+      line-height: 1.55;
       color: var(--ink);
-    }
-    .g-review__check {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 2px;
-      background: var(--red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .g-review__check svg {
-      width: 11px;
-      height: 11px;
-      fill: var(--white);
+      padding-left: 14px;
+      border-left: 3px solid var(--red);
     }
     .g-review__points em {
       font-style: normal;
@@ -505,7 +590,8 @@
 
     @media (min-width: 720px) {
       .voice-title { font-size: 1.65rem; }
-      .g-review { padding: 22px; }
+      .g-review { padding: 22px 20px; }
+      .g-star { width: 24px; height: 24px; }
     }
 
     /* ── 3つの理由：左テキスト / 右画像 ── */
@@ -514,18 +600,17 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
       align-items: stretch;
-      background: var(--white);
+      background: #ffffff;
       border: 1px solid var(--line);
       border-left: 5px solid var(--red);
-      border-radius: 0 10px 10px 0;
+      border-radius: 0;
       overflow: hidden;
       min-height: 140px;
-      box-shadow: var(--shadow-card);
-      transition: transform .35s ease, box-shadow .35s ease;
+      box-shadow: none;
     }
     .reason:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lift);
+      transform: none;
+      box-shadow: none;
     }
     .reason-body {
       display: flex;
@@ -580,7 +665,7 @@
     .reason-photo {
       min-height: 100%;
       overflow: hidden;
-      background: #f5f5f5;
+      background: #ffffff;
       box-shadow: inset 8px 0 16px rgba(0,0,0,.04);
     }
     .reason-photo img {
@@ -601,16 +686,238 @@
       .reason p { font-size: .82rem; }
     }
 
-    /* ── 施設・マップ・トレーナー ── */
+    /* ── アクセス ── */
+    .access-sec {
+      padding: 36px 18px 40px;
+      background: #ffffff;
+    }
+    .access-panel {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .access-station {
+      margin: 0 0 20px;
+      padding: 14px 16px;
+      text-align: center;
+      font-size: .88rem;
+      font-weight: 800;
+      line-height: 1.55;
+      color: var(--black);
+      background: var(--canvas);
+      border: 2px solid var(--black);
+      box-shadow: 0 3px 0 var(--black);
+    }
+    .access-station em {
+      font-style: normal;
+      color: var(--red);
+      font-weight: 900;
+    }
+    .media-wrap--map {
+      width: min(86%, 460px);
+      margin: 0 auto 24px;
+    }
+    .access-spots {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .access-spot {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px 14px;
+      align-items: start;
+      padding: 16px 14px;
+      background: #ffffff;
+      border: 2px solid var(--black);
+      box-shadow: 0 4px 0 var(--black);
+    }
+    .access-spot__num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--red);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1;
+      border: 2px solid var(--red-dark);
+      box-shadow: 0 3px 0 var(--red-dark);
+      flex-shrink: 0;
+    }
+    .access-spot__body {
+      min-width: 0;
+    }
+    .access-spot__name {
+      margin: 0 0 4px;
+      font-size: .92rem;
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -.02em;
+      color: var(--black);
+    }
+    .access-spot__desc {
+      margin: 0 0 6px;
+      font-size: .78rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--grey);
+    }
+    .access-spot__addr {
+      margin: 0;
+      font-size: .72rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .access-map-link {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px;
+      font-size: .82rem;
+      font-weight: 900;
+      text-align: center;
+      color: var(--black);
+      background: #ffffff;
+      border: 2px solid var(--black);
+      box-shadow: 0 3px 0 var(--black);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .access-map-link:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--black);
+    }
+    .access-map-link svg {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .access-sec { padding: 44px 28px 48px; }
+      .access-panel { max-width: 540px; }
+      .media-wrap--map { width: min(82%, 480px); }
+      .access-spot { padding: 18px 16px; gap: 14px 16px; }
+      .access-spot__num { width: 40px; height: 40px; font-size: 1.05rem; }
+      .access-spot__name { font-size: .98rem; }
+      .access-spot__desc { font-size: .82rem; }
+    }
+
+    /* ── 施設（エディトリアル・フル幅） ── */
+    .facility-sec {
+      padding: 40px 0 48px;
+      background: #ffffff;
+    }
+    .facility-head {
+      padding: 0 20px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .facility-head .sec-title {
+      margin-bottom: 0;
+    }
+    .facility-head .sec-title::after {
+      content: "";
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--red);
+      margin: 14px auto 0;
+    }
+    .facility-lead {
+      margin: 14px 0 0;
+      font-size: .88rem;
+      font-weight: 800;
+      color: var(--grey);
+      letter-spacing: .06em;
+    }
+    .facility-list {
+      display: grid;
+      gap: 36px;
+    }
+    .facility-item__meta {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      padding: 0 20px 14px;
+    }
+    .facility-item:nth-child(even) .facility-item__meta {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+    .facility-item__num {
+      font-size: 2.4rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.04em;
+      color: var(--red);
+      opacity: .85;
+      flex-shrink: 0;
+    }
+    .facility-item__title {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -.02em;
+      color: var(--black);
+    }
+    .facility-item__sub {
+      margin: 3px 0 0;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .facility-item__visual {
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+      background: var(--canvas);
+    }
+    .facility-item__visual img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .facility-note {
+      margin: 28px 0 0;
+      padding: 0 20px;
+      text-align: center;
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+
+    @media (min-width: 720px) {
+      .facility-sec { padding: 48px 0 56px; }
+      .facility-head { margin-bottom: 36px; }
+      .facility-list { gap: 44px; }
+      .facility-item__num { font-size: 2.8rem; }
+      .facility-item__title { font-size: 1.12rem; }
+      .facility-item__sub { font-size: .82rem; }
+      .facility-item__meta { padding: 0 28px 16px; }
+    }
+
+    /* ── 施設・トレーナー（旧マップ用） ── */
     .facilities { display: grid; gap: 12px; }
     .map-box {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px;
-      box-shadow: var(--shadow-card);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
     }
-    .map-box img { width: 100%; height: auto; border-radius: 6px; }
+    .map-box img { width: 100%; height: auto; border-radius: 0; }
     .map-note {
       margin: 12px 0 0;
       font-size: .82rem;
@@ -619,139 +926,98 @@
       text-align: center;
     }
 
-    /* ── フッター ── */
-    .footer-cta {
-      background: var(--black);
-      color: var(--white);
-      padding: 32px 18px 36px;
-      border-top: 2px solid var(--red);
+    /* ── 末尾CTA ── */
+    .closing-cta {
+      padding: 28px 18px 36px;
+      background: #ffffff;
+      border-top: 1px solid #ebebeb;
     }
-    .footer-cta .sec-label { color: var(--muted); }
-    .footer-cta .sec-title { color: var(--white); margin-bottom: 10px; font-size: 1.55rem; font-weight: 900; }
-    .footer-cta .sec-title em { color: var(--red); -webkit-text-fill-color: var(--red); background: none; filter: none; }
-    .footer-cta .price-was,
-    .footer-cta .price-tax { color: #aaa; text-align: center; }
-    .footer-cta .btn-primary {
-      background: var(--white);
-      color: var(--black);
+    .closing-cta .btn-row {
+      margin-top: 0;
+      gap: 12px;
     }
-    .footer-cta .btn-secondary {
-      background: transparent;
-      color: var(--white);
-      border-color: var(--white);
-    }
-    .footer-note {
-      margin: 18px 0 0;
+    .closing-note {
+      margin: 20px 0 0;
       text-align: center;
-      font-size: .75rem;
+      font-size: .72rem;
       font-weight: 700;
-      color: #777;
-      line-height: 1.5;
+      color: var(--muted);
+      line-height: 1.55;
     }
 
     @media (max-width: 520px) {
-      .hero-banner {
-        grid-template-columns: 1fr;
-        min-height: auto;
-      }
-      .hero-copy { padding: 24px 18px 16px; }
-      .hero-line--1 { font-size: 1rem; }
-      .hero-line--2 { font-size: 1.55rem; }
-      .hero-line--3 { font-size: 1.38rem; }
-      .hero-visual {
-        min-height: 200px;
-      }
-      .hero-visual::after {
-        background: linear-gradient(
-          to bottom,
-          transparent 60%,
-          var(--white) 100%
-        );
-      }
-      .price-main { font-size: 2.8rem; }
+      .offer-price-now { font-size: 2.85rem; }
+      .offer-perks { font-size: .88rem; }
     }
 
     @media (min-width: 720px) {
       .sec { padding: 48px 24px; }
-      .hero-banner { min-height: 300px; }
-      .hero-copy { padding: 36px 20px 36px 24px; }
-      .hero-line--1 { font-size: 1.15rem; }
-      .hero-line--2 { font-size: 2rem; }
-      .hero-line--3 { font-size: 1.78rem; }
-      .feature-grid { padding: 22px 24px 28px; }
-      .price-main { font-size: 3.5rem; }
+      .sec--media { padding: 44px 36px 48px; }
+      .media-wrap,
+      .media-stack,
+      .shot-note,
+      .map-note {
+        width: min(88%, 600px);
+      }
+      .offer-sec { padding: 48px 0 44px; }
+      .offer-panel { padding: 44px 28px 48px; }
+      .offer-price-now { font-size: 4rem; }
+      .offer-price-now small { font-size: 1.35rem; }
+      .offer-perks { font-size: 1.05rem; }
+      .media-stack--teaser { margin-bottom: 28px; }
+      .closing-cta { padding: 32px 24px 44px; }
+      .media-stack { gap: 20px; }
       .sec-title { font-size: 1.72rem; }
-      .price-wrap,
-      .cta-block { padding-left: 24px; padding-right: 24px; }
     }
   </style>
 </head>
 <body>
   <div class="page">
 
-    <div class="urgent">
-      キャンペーン実施中　<strong>〜5/30（火）</strong>　残り枠わずか
-    </div>
+    <section class="offer-sec reveal" aria-label="キャンペーン料金">
+      <div class="facility-head">
+        <p class="sec-label">Campaign</p>
+        <h2 class="sec-title">7月限定キャンペーン</h2>
+      </div>
 
-    <header class="hero">
-      <div class="hero-banner reveal">
-        <div class="hero-copy">
-          <h1 class="hero-catch">
-            <span class="hero-line hero-line--1">ジムが初めてでも<em>安心！</em></span>
-            <span class="hero-line hero-line--2">完全個室で</span>
-            <span class="hero-line hero-line--3">30分無料サポート</span>
-          </h1>
+      <article class="offer-item">
+        <div class="facility-item__meta">
+          <span class="facility-item__num" aria-hidden="true">6</span>
+          <div>
+            <p class="facility-item__title">ヶ月間限定</p>
+            <p class="facility-item__sub">月会費がずっとお得</p>
+          </div>
         </div>
-        <div class="hero-visual">
+
+        <div class="offer-panel">
+          <div class="offer-price-row">
+            <span class="offer-price-was">7,980<small>円</small></span>
+            <span class="offer-price-arrow" aria-hidden="true">→</span>
+            <span class="offer-price-now">5,980<small>円</small></span>
+          </div>
+          <p class="offer-tax">税込 6,578円</p>
+          <p class="offer-perks">6ヶ月で最大 <em>12,000円</em> お得 · 入会金 <em>0円</em></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="sec sec--media sec--bg">
+      <div class="media-stack media-stack--teaser">
+        <figure class="media-item">
           <img
-            src="assets/azabu-juban/hero.png"
-            alt="JOYFITトレーナーによる完全個室サポート"
-            width="1200"
-            height="750"
-            fetchpriority="high"
+            src="assets/azabu-juban/hero-banner.png?v=2"
+            alt="ジムが初めてでも安心。完全個室で30分無料サポート"
+            width="1400"
+            height="560"
+            loading="lazy"
             decoding="async"
           />
-        </div>
+        </figure>
       </div>
-
-      <div class="feature-grid reveal reveal-d2">
-        <div class="feature"><div class="feature-ico">0円</div>入会金0円</div>
-        <div class="feature"><div class="feature-ico">24h</div>24時間営業</div>
-        <div class="feature"><div class="feature-ico">3分</div>駅徒歩3分</div>
-        <div class="feature"><div class="feature-ico">予約</div>予約制サポート</div>
-      </div>
-    </header>
-
-    <div class="price-wrap">
-      <section class="price-box" aria-label="キャンペーン料金">
-        <div class="price-head">6ヶ月間　特別月会費</div>
-        <div class="price-body">
-          <p class="price-was">通常 7,980円</p>
-          <p class="price-main">5,980<small>円</small></p>
-          <p class="price-tax">税込 6,578円</p>
-          <p class="price-save">毎月 2,000円OFF</p>
-        </div>
-      </section>
-    </div>
-
-    <div class="cta-block">
-      <div class="btn-row">
-        <a class="btn btn-accent" href="#contact">
-          無料体験・見学
-          <small>30分無料サポート付き</small>
-        </a>
-        <a class="btn btn-secondary" href="#contact">
-          アプリで簡単入会
-          <small>約5分で完了</small>
-        </a>
-      </div>
-    </div>
-
-    <section class="sec sec--bg">
       <p class="sec-label">Results</p>
       <h2 class="sec-title">初心者でも、ここまで変わる</h2>
-      <div class="shot-grid">
-        <figure class="shot">
+      <div class="media-stack">
+        <figure class="media-item">
           <img
             src="assets/azabu-juban/ba-man.png"
             alt="40代男性会員様。1回のパーソナルトレーニングで姿勢が改善"
@@ -761,7 +1027,7 @@
             decoding="async"
           />
         </figure>
-        <figure class="shot">
+        <figure class="media-item">
           <img
             src="assets/azabu-juban/ba-woman.png"
             alt="30代女性会員様。3ヶ月で体重-4.2kg・体脂肪率-6.8%・ウエスト-7cm"
@@ -775,7 +1041,7 @@
       <p class="shot-note">※効果には個人差があります</p>
     </section>
 
-    <section class="sec voice-sec">
+    <section class="sec sec--white voice-sec">
       <h2 class="voice-title">実際に通っている方の声</h2>
       <p class="voice-google-badge" aria-label="Googleクチコミ">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
@@ -789,42 +1055,34 @@
       <div class="reviews">
         <article class="g-review">
           <div class="g-review__head">
-            <div class="g-review__avatar g-review__avatar--kt" aria-hidden="true">🐿</div>
+            <div class="g-review__avatar g-review__avatar--kt" aria-hidden="true">KT</div>
             <div class="g-review__meta">
-              <div class="g-review__top">
-                <p class="g-review__name">KT様</p>
+              <p class="g-review__name">KT様</p>
+              <div class="g-review__rating">
                 <div class="g-review__stars" aria-label="5つ星">
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 </div>
+                <span class="g-review__score">5.0</span>
+                <span class="g-review__via">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  Google クチコミ
+                </span>
               </div>
-              <p class="g-review__source">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                Google クチコミ · ローカルガイド
-              </p>
             </div>
           </div>
           <ul class="g-review__points">
-            <li>
-              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-              運動が<em>習慣</em>に！
-            </li>
-            <li>
-              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-              完全に<em>マンツーマン</em>！
-            </li>
-            <li>
-              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-              食事指導も<em>安心</em>！
-            </li>
+            <li>運動が<em>習慣</em>に！</li>
+            <li>完全に<em>マンツーマン</em>！</li>
+            <li>食事指導も<em>安心</em>！</li>
           </ul>
         </article>
 
@@ -832,59 +1090,75 @@
           <div class="g-review__head">
             <div class="g-review__avatar g-review__avatar--ch" aria-hidden="true">C</div>
             <div class="g-review__meta">
-              <div class="g-review__top">
-                <p class="g-review__name">Christina様</p>
+              <p class="g-review__name">Christina様</p>
+              <div class="g-review__rating">
                 <div class="g-review__stars" aria-label="5つ星">
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg class="g-star" viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 </div>
+                <span class="g-review__score">5.0</span>
+                <span class="g-review__via">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  Google クチコミ
+                </span>
               </div>
-              <p class="g-review__source">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                Google クチコミ · ローカルガイド
-              </p>
             </div>
           </div>
           <ul class="g-review__points">
-            <li>
-              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-              完全個室で<em>人目を気にせず</em>！
-            </li>
-            <li>
-              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-              トレーナーが<em>優しくて安心</em>！
-            </li>
-            <li>
-              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-              短期間でも<em>しっかり効果</em>！
-            </li>
+            <li>完全個室で<em>人目を気にせず</em>！</li>
+            <li>トレーナーが<em>優しくて安心</em>！</li>
+            <li>短期間でも<em>しっかり効果</em>！</li>
           </ul>
         </article>
       </div>
     </section>
 
-    <section class="sec sec--bg">
-      <div class="panel">
-        <img
-          src="assets/azabu-juban/worries.png"
-          alt="こんなお悩みありませんか？ジムが続かない、マシンの使い方に不安、人目が気になる、運動不足を解消したい。JOYFIT24麻布十番が初心者に選ばれる3つの理由"
-          width="1400"
-          height="700"
-          loading="lazy"
-          decoding="async"
-        />
+    <section class="sec sec--white worries-sec" aria-labelledby="worries-heading">
+      <div class="worries">
+        <p class="sec-label">Check</p>
+        <h2 class="worries__title" id="worries-heading">
+          こんな<em>お悩み</em>ありませんか？
+        </h2>
+
+        <ol class="worry-list">
+          <li class="worry-item">
+            <span class="worry-num" aria-hidden="true">①</span>
+            <p class="worry-text">ジムが<em>続かない</em></p>
+          </li>
+          <li class="worry-item">
+            <span class="worry-num" aria-hidden="true">②</span>
+            <p class="worry-text">マシンの使い方に<em>不安がある</em></p>
+          </li>
+          <li class="worry-item">
+            <span class="worry-num" aria-hidden="true">③</span>
+            <p class="worry-text"><em>人目が</em>気になる</p>
+          </li>
+          <li class="worry-item">
+            <span class="worry-num" aria-hidden="true">④</span>
+            <p class="worry-text">運動不足を<em>解消したい</em></p>
+          </li>
+        </ol>
+
+        <div class="worries__lead">
+          <p class="worries__brand">JOY FIT 24 麻布十番が</p>
+          <p class="worries__reasons">
+            初心者に選ばれる
+            <span class="worries__big3" aria-hidden="true">3</span>
+            つの理由
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="sec">
+    <section class="sec sec--white">
       <p class="sec-label">Why</p>
       <h2 class="sec-title">初心者が選ぶ<em>3</em>つの理由</h2>
       <div class="reasons">
@@ -950,88 +1224,200 @@
       </div>
     </section>
 
-    <section class="sec sec--bg">
-      <p class="sec-label">Facility</p>
-      <h2 class="sec-title">3つの施設を使い放題</h2>
-      <div class="facilities">
-        <figure class="shot">
-          <img
-            src="assets/azabu-juban/facility-main.png"
-            alt="① JOYFIT24 麻布十番。初心者におすすめのマシンジム"
-            width="1400"
-            height="560"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-        <figure class="shot">
-          <img
-            src="assets/azabu-juban/facility-annex.png"
-            alt="② JOYFIT24 麻布十番 ANNEX。フリーウェイト専用エリア"
-            width="1400"
-            height="560"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-        <figure class="shot">
-          <img
-            src="assets/azabu-juban/facility-pt.png"
-            alt="③ JOYFIT+ 麻布十番。パーソナルトレーニング専用施設"
-            width="1400"
-            height="560"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
+    <section class="sec facility-sec">
+      <div class="facility-head">
+        <p class="sec-label">Facility</p>
+        <h2 class="sec-title">3つの施設を使い放題</h2>
+        <p class="facility-lead">入会で3エリアすべてご利用いただけます</p>
       </div>
+
+      <div class="facility-list">
+        <article class="facility-item">
+          <div class="facility-item__meta">
+            <span class="facility-item__num" aria-hidden="true">01</span>
+            <div>
+              <p class="facility-item__title">JOYFIT24 麻布十番</p>
+              <p class="facility-item__sub">初心者向けマシンジム</p>
+            </div>
+          </div>
+          <figure class="facility-item__visual">
+            <img
+              src="assets/azabu-juban/facility-main.png"
+              alt="① JOYFIT24 麻布十番。初心者におすすめのマシンジム"
+              width="1400"
+              height="560"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </article>
+
+        <article class="facility-item">
+          <div class="facility-item__meta">
+            <span class="facility-item__num" aria-hidden="true">02</span>
+            <div>
+              <p class="facility-item__title">JOYFIT24 麻布十番 ANNEX</p>
+              <p class="facility-item__sub">フリーウェイト専用エリア（B1）</p>
+            </div>
+          </div>
+          <figure class="facility-item__visual">
+            <img
+              src="assets/azabu-juban/facility-annex.png"
+              alt="② JOYFIT24 麻布十番 ANNEX。フリーウェイト専用エリア"
+              width="1400"
+              height="560"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </article>
+
+        <article class="facility-item">
+          <div class="facility-item__meta">
+            <span class="facility-item__num" aria-hidden="true">03</span>
+            <div>
+              <p class="facility-item__title">JOYFIT+ 麻布十番</p>
+              <p class="facility-item__sub">パーソナルトレーニング専用（2F）</p>
+            </div>
+          </div>
+          <figure class="facility-item__visual">
+            <img
+              src="assets/azabu-juban/facility-pt.png"
+              alt="③ JOYFIT+ 麻布十番。パーソナルトレーニング専用施設"
+              width="1400"
+              height="560"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </article>
+      </div>
+
+      <p class="facility-note">※3施設すべて、会員料金内で使い放題</p>
     </section>
 
-    <section class="sec">
+    <section class="sec sec--white access-sec">
       <p class="sec-label">Access</p>
       <h2 class="sec-title">アクセス</h2>
-      <div class="map-box">
-        <img
-          src="assets/azabu-juban/map.png"
-          alt="麻布十番駅周辺マップ。JOYFIT24麻布十番、ANNEX、JOYFIT+麻布十番の位置"
-          width="1400"
-          height="1000"
-          loading="lazy"
-          decoding="async"
-        />
-        <p class="map-note">麻布十番駅から徒歩圏内に本館・ANNEX・JOYFIT+があります</p>
+      <div class="access-panel">
+        <p class="access-station">
+          東京メトロ南北線・都営大江戸線<br />
+          <em>麻布十番駅</em>　4番出口より徒歩3〜4分
+        </p>
+
+        <div class="media-wrap media-wrap--map">
+          <figure class="media-item">
+            <img
+              src="assets/azabu-juban/map.png"
+              alt="麻布十番駅周辺の地図。JOYFIT24麻布十番・ANNEX・JOYFIT+麻布十番の位置"
+              width="1400"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+
+        <ul class="access-spots">
+          <li class="access-spot">
+            <span class="access-spot__num" aria-hidden="true">①</span>
+            <div class="access-spot__body">
+              <p class="access-spot__name">JOYFIT24 麻布十番</p>
+              <p class="access-spot__desc">初心者向けマシンジム（本館）</p>
+              <p class="access-spot__addr">港区麻布十番2-10-3 マイスクエアビル2F／4番出口徒歩4分</p>
+            </div>
+            <a
+              class="access-map-link"
+              href="https://goo.gl/maps/zc9BF8u23fnUhv447"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#c21632"/>
+                <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+              </svg>
+              JOYFIT24 麻布十番はこちら（Googleマップ）
+            </a>
+          </li>
+
+          <li class="access-spot">
+            <span class="access-spot__num" aria-hidden="true">②</span>
+            <div class="access-spot__body">
+              <p class="access-spot__name">JOYFIT24 麻布十番 ANNEX</p>
+              <p class="access-spot__desc">フリーウェイト専用エリア（地下1階）</p>
+              <p class="access-spot__addr">港区麻布十番2-16-4 プラスワンビルB1／4番出口徒歩3分</p>
+            </div>
+            <a
+              class="access-map-link"
+              href="https://goo.gl/maps/m7wJwWgjpsXyFDN89"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#c21632"/>
+                <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+              </svg>
+              ANNEXはこちら（Googleマップ）
+            </a>
+          </li>
+
+          <li class="access-spot">
+            <span class="access-spot__num" aria-hidden="true">③</span>
+            <div class="access-spot__body">
+              <p class="access-spot__name">JOYFIT+ 麻布十番</p>
+              <p class="access-spot__desc">パーソナルトレーニング専用施設（2階）</p>
+              <p class="access-spot__addr">港区麻布十番2-16-4 プラスワンビル2F／4番出口徒歩3分</p>
+            </div>
+            <a
+              class="access-map-link"
+              href="https://goo.gl/maps/2kvhyVUpwadcgTqt5"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#c21632"/>
+                <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+              </svg>
+              JOYFIT+ 麻布十番はこちら（Googleマップ）
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section class="sec sec--bg">
+    <section class="sec sec--media sec--bg">
       <p class="sec-label">Trainer</p>
       <h2 class="sec-title">トレーナー紹介</h2>
-      <figure class="shot">
-        <img
-          src="assets/azabu-juban/trainers.png"
-          alt="パーソナルトレーナー紹介。石橋憲一、新田悠貴、長利雅也"
-          width="1400"
-          height="560"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
+      <div class="media-wrap">
+        <figure class="media-item">
+          <img
+            src="assets/azabu-juban/trainers.png"
+            alt="パーソナルトレーナー紹介。石橋憲一、新田悠貴、長利雅也"
+            width="1400"
+            height="560"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
     </section>
 
-    <footer class="footer-cta" id="contact">
-      <p class="sec-label">Campaign</p>
-      <h2 class="sec-title">6ヶ月間　月額<em>5,980円</em></h2>
-      <p class="price-was">通常 7,980円</p>
-      <p class="price-tax">税込 6,578円　／　毎月2,000円OFF</p>
-      <div class="btn-row" style="margin-top:20px">
-        <a class="btn btn-primary" href="#">無料体験・見学<small>30分無料サポート付き</small></a>
-        <a class="btn btn-secondary" href="#">アプリで簡単入会<small>約5分で完了</small></a>
+    <div class="closing-cta" id="contact">
+      <div class="btn-row">
+        <a class="btn btn-accent" href="#">
+          無料体験・見学
+          <small>30分無料サポート付き</small>
+        </a>
+        <a class="btn btn-secondary" href="#">
+          アプリで簡単入会
+          <small>約5分で完了</small>
+        </a>
       </div>
-      <p class="footer-note">
+      <p class="closing-note">
         JOYFIT24 麻布十番<br />
         キャンペーン期間・条件は店舗案内に準じます
       </p>
-    </footer>
+    </div>
 
   </div>
 </body>

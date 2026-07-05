@@ -229,77 +229,73 @@
       margin-top: 0;
     }
 
-    /* ── キャンペーン（エディトリアル・施設と同系統） ── */
-    .offer-sec {
-      padding: 40px 0 36px;
+    /* ── キャンペーン（ポスター型・FV） ── */
+    .campaign-sec {
+      padding: 0;
       background: #ffffff;
     }
-    .offer-sec .facility-head {
-      margin-bottom: 32px;
-    }
-    .offer-item {
-      display: grid;
-      gap: 0;
-    }
-    .offer-panel {
-      padding: 36px 20px 40px;
-      background: var(--canvas);
+    .campaign-hero {
+      padding: 38px 20px 34px;
       text-align: center;
+      background: var(--red);
+      color: #ffffff;
     }
-    .offer-price-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      gap: 10px 14px;
-      flex-wrap: nowrap;
-    }
-    .offer-price-was {
-      font-size: 1.15rem;
+    .campaign-hero__title {
+      margin: 0;
+      font-size: 1.85rem;
       font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: .06em;
+    }
+    .campaign-hero__sub {
+      margin: 14px 0 0;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      opacity: .95;
+    }
+    .campaign-body {
+      padding: 36px 20px 28px;
+      text-align: center;
+      background: #ffffff;
+    }
+    .campaign-was {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
       color: var(--muted);
       text-decoration: line-through;
       text-decoration-thickness: 2px;
-      letter-spacing: -.02em;
     }
-    .offer-price-was small {
-      font-size: .82rem;
-      font-weight: 800;
-    }
-    .offer-price-arrow {
-      font-size: 1.25rem;
-      font-weight: 900;
-      color: var(--red);
-      line-height: 1;
-    }
-    .offer-price-now {
-      font-size: 3.4rem;
+    .campaign-price {
+      margin: 6px 0 0;
+      font-size: 4.6rem;
       font-weight: 900;
       line-height: 1;
-      letter-spacing: -.04em;
+      letter-spacing: -.05em;
       color: var(--red);
     }
-    .offer-price-now small {
-      font-size: 1.2rem;
+    .campaign-price small {
+      font-size: 1.35rem;
       font-weight: 900;
     }
-    .offer-tax {
+    .campaign-tax {
       margin: 10px 0 0;
-      font-size: .92rem;
+      font-size: .95rem;
       font-weight: 800;
-      color: var(--grey);
-      letter-spacing: .04em;
+      color: var(--black);
     }
-    .offer-perks {
-      margin: 22px 0 0;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
-      font-size: .98rem;
+    .campaign-foot {
+      padding: 18px 20px 22px;
+      text-align: center;
+      font-size: .95rem;
       font-weight: 800;
       line-height: 1.5;
-      color: var(--black);
-      letter-spacing: .02em;
+      letter-spacing: .03em;
+      color: #ffffff;
+      background: var(--black);
     }
-    .offer-perks em {
+    .campaign-foot em {
       font-style: normal;
       font-weight: 900;
       color: var(--red);
@@ -946,8 +942,8 @@
     }
 
     @media (max-width: 520px) {
-      .offer-price-now { font-size: 2.85rem; }
-      .offer-perks { font-size: .88rem; }
+      .campaign-hero__title { font-size: 2.1rem; }
+      .campaign-price { font-size: 3.8rem; }
     }
 
     @media (min-width: 720px) {
@@ -959,11 +955,11 @@
       .map-note {
         width: min(88%, 600px);
       }
-      .offer-sec { padding: 48px 0 44px; }
-      .offer-panel { padding: 44px 28px 48px; }
-      .offer-price-now { font-size: 4rem; }
-      .offer-price-now small { font-size: 1.35rem; }
-      .offer-perks { font-size: 1.05rem; }
+      .campaign-hero { padding: 48px 28px 42px; }
+      .campaign-hero__title { font-size: 2.35rem; }
+      .campaign-body { padding: 44px 28px 36px; }
+      .campaign-price { font-size: 5.2rem; }
+      .campaign-foot { padding: 22px 28px 26px; font-size: 1.02rem; }
       .media-stack--teaser { margin-bottom: 28px; }
       .closing-cta { padding: 32px 24px 44px; }
       .media-stack { gap: 20px; }
@@ -974,31 +970,19 @@
 <body>
   <div class="page">
 
-    <section class="offer-sec reveal" aria-label="キャンペーン料金">
-      <div class="facility-head">
-        <p class="sec-label">Campaign</p>
-        <h2 class="sec-title">7月限定キャンペーン</h2>
+    <section class="campaign-sec reveal" aria-label="キャンペーン料金">
+      <div class="campaign-hero">
+        <h1 class="campaign-hero__title">7月限定キャンペーン</h1>
+        <p class="campaign-hero__sub">6ヶ月間　月会費がずっとお得</p>
       </div>
 
-      <article class="offer-item">
-        <div class="facility-item__meta">
-          <span class="facility-item__num" aria-hidden="true">6</span>
-          <div>
-            <p class="facility-item__title">ヶ月間限定</p>
-            <p class="facility-item__sub">月会費がずっとお得</p>
-          </div>
-        </div>
+      <div class="campaign-body">
+        <p class="campaign-was">通常 7,980円</p>
+        <p class="campaign-price">5,980<small>円</small></p>
+        <p class="campaign-tax">税込 6,578円</p>
+      </div>
 
-        <div class="offer-panel">
-          <div class="offer-price-row">
-            <span class="offer-price-was">7,980<small>円</small></span>
-            <span class="offer-price-arrow" aria-hidden="true">→</span>
-            <span class="offer-price-now">5,980<small>円</small></span>
-          </div>
-          <p class="offer-tax">税込 6,578円</p>
-          <p class="offer-perks">6ヶ月で最大 <em>12,000円</em> お得 · 入会金 <em>0円</em></p>
-        </div>
-      </article>
+      <p class="campaign-foot">6ヶ月で最大 <em>12,000円</em> お得 · 入会金 <em>0円</em></p>
     </section>
 
     <section class="sec sec--media sec--bg">

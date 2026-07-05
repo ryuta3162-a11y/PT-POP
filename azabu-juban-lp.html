@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JOYFIT24 麻布十番｜初心者歓迎・完全個室サポート</title>
   <meta name="description" content="ジム初心者でも安心。完全個室で30分無料サポート。麻布十番駅徒歩3分の24時間ジム JOYFIT24。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --red: #c21632;
@@ -19,13 +22,16 @@
       --max: 720px;
       --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
       --shadow-md: 0 4px 20px rgba(0,0,0,.07);
+      --shadow-card: 0 2px 4px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.09);
+      --shadow-lift: 0 4px 8px rgba(0,0,0,.05), 0 20px 40px rgba(0,0,0,.1);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
+      font-family: "Noto Sans JP", sans-serif;
+      font-weight: 700;
       color: var(--ink);
       background: var(--white);
       line-height: 1.65;
@@ -61,27 +67,29 @@
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { animation: none; }
+      .shot:hover, .reason:hover, .panel:hover { transform: none; }
+      .reason:hover .reason-photo img { transform: none; }
     }
 
     .sec { padding: 36px 18px; }
     .sec--bg { background: var(--white); }
     .sec + .sec { border-top: 1px solid var(--line); }
     .sec-label {
-      margin: 0 0 6px;
+      margin: 0 0 8px;
       text-align: center;
-      font-size: .68rem;
-      font-weight: 700;
+      font-size: .78rem;
+      font-weight: 800;
       letter-spacing: .22em;
       color: var(--muted);
       text-transform: uppercase;
     }
     .sec-title {
-      margin: 0 0 20px;
-      font-size: 1.32rem;
-      font-weight: 800;
+      margin: 0 0 24px;
+      font-size: 1.55rem;
+      font-weight: 900;
       text-align: center;
-      line-height: 1.4;
-      letter-spacing: -.01em;
+      line-height: 1.35;
+      letter-spacing: -.02em;
     }
     .sec-title em {
       font-style: normal;
@@ -91,8 +99,14 @@
     .panel {
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .panel:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lift);
     }
     .panel img { width: 100%; height: auto; }
 
@@ -102,9 +116,9 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      min-height: 54px;
-      border-radius: 6px;
-      font-size: 1rem;
+      min-height: 58px;
+      border-radius: 8px;
+      font-size: 1.08rem;
       font-weight: 800;
       text-align: center;
       line-height: 1.25;
@@ -113,8 +127,8 @@
       transition: opacity .15s;
     }
     .btn small {
-      font-size: .74rem;
-      font-weight: 600;
+      font-size: .82rem;
+      font-weight: 700;
       margin-top: 2px;
       opacity: .85;
     }
@@ -140,103 +154,139 @@
       background: var(--black);
       color: var(--white);
       text-align: center;
-      padding: 11px 14px;
-      font-weight: 700;
-      font-size: .88rem;
+      padding: 13px 14px;
+      font-weight: 800;
+      font-size: .98rem;
       letter-spacing: .04em;
       border-bottom: 2px solid var(--red);
     }
-    .urgent strong { color: var(--red); font-weight: 800; }
+    .urgent strong { color: var(--red); font-weight: 900; }
 
-    /* ── ヒーロー ── */
+    /* ── ヒーロー：左テキスト / 右画像（Canva） ── */
     .hero {
-      padding: 28px 18px 30px;
+      padding: 0;
       background: var(--white);
     }
-    .hero-top {
+    .hero-banner {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 22px;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+      align-items: stretch;
+      min-height: 260px;
+      background: var(--white);
+      overflow: hidden;
     }
-    .hero-copy { min-width: 0; }
-    .hero-brand {
-      margin: 0 0 12px;
-      font-size: .88rem;
-      font-weight: 800;
-      letter-spacing: .16em;
-      color: var(--ink);
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px 16px 28px 18px;
+      z-index: 2;
     }
-    .hero-brand span { color: var(--accent); }
     .hero-catch {
       margin: 0;
-      font-size: 1.22rem;
-      font-weight: 800;
-      line-height: 1.5;
-      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    .hero-catch em {
+    .hero-line {
+      display: block;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -.02em;
+    }
+    .hero-line--1 {
+      font-size: 1.05rem;
+      color: var(--black);
+    }
+    .hero-line--1 em {
       font-style: normal;
-      border-bottom: 3px solid var(--accent);
-      padding-bottom: 1px;
+      color: var(--red);
     }
-    .hero-visual { min-width: 0; }
-    .hero-photo-frame {
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--line);
-      box-shadow: var(--shadow-md);
+    .hero-line--2 {
+      font-size: 1.75rem;
+      color: var(--black);
+      margin-top: 4px;
     }
-    .hero-photo-frame img {
+    .hero-line--3 {
+      font-size: 1.55rem;
+      color: var(--red);
+    }
+    .hero-visual {
+      position: relative;
+      min-height: 220px;
+      background: var(--white);
+    }
+    .hero-visual img {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      aspect-ratio: 4 / 3;
+      height: 100%;
       object-fit: cover;
-      object-position: center 20%;
+      object-position: 55% center;
+    }
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        var(--white) 0%,
+        rgba(255,255,255,.92) 8%,
+        rgba(255,255,255,.55) 22%,
+        rgba(255,255,255,.15) 38%,
+        transparent 52%
+      );
+      pointer-events: none;
+      z-index: 1;
     }
 
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 10px;
+      margin: 0;
+      padding: 20px 18px 24px;
+      border-top: 1px solid var(--line);
     }
     .feature {
       text-align: center;
-      font-size: .68rem;
-      font-weight: 700;
-      line-height: 1.35;
+      font-size: .78rem;
+      font-weight: 800;
+      line-height: 1.4;
       color: var(--grey);
-      padding: 10px 4px;
+      padding: 12px 4px;
     }
     .feature-ico {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 6px;
-      border-radius: 6px;
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 8px;
+      border-radius: 8px;
       border: 1.5px solid var(--line);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: .64rem;
-      font-weight: 800;
+      font-size: .72rem;
+      font-weight: 900;
       color: var(--red);
       background: var(--white);
+      box-shadow: 0 2px 0 #e0e0e0, 0 4px 12px rgba(0,0,0,.06);
     }
 
     /* ── 料金 ── */
     .price-wrap { padding: 0 18px 6px; }
     .price-box {
-      border: 1.5px solid var(--black);
-      border-radius: 8px;
+      border: 2px solid var(--black);
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: var(--shadow-card);
     }
     .price-head {
       background: var(--red);
       color: var(--white);
       text-align: center;
-      padding: 12px;
-      font-weight: 800;
-      font-size: .92rem;
+      padding: 14px;
+      font-weight: 900;
+      font-size: 1.05rem;
       letter-spacing: .1em;
     }
     .price-body {
@@ -247,45 +297,53 @@
     .price-was {
       margin: 0;
       color: var(--muted);
-      font-size: .86rem;
+      font-size: .95rem;
+      font-weight: 700;
       text-decoration: line-through;
     }
     .price-main {
-      margin: 4px 0 0;
-      font-size: 2.75rem;
+      margin: 6px 0 0;
+      font-size: 3.2rem;
       font-weight: 900;
       line-height: 1;
-      letter-spacing: -.02em;
+      letter-spacing: -.03em;
       color: var(--red);
     }
-    .price-main small { font-size: 1rem; font-weight: 800; }
-    .price-tax { margin: 6px 0 0; font-size: .8rem; color: var(--grey); }
+    .price-main small { font-size: 1.15rem; font-weight: 900; }
+    .price-tax { margin: 8px 0 0; font-size: .92rem; font-weight: 700; color: var(--grey); }
     .price-save {
       display: inline-block;
-      margin-top: 12px;
-      border: 1.5px solid var(--red);
+      margin-top: 14px;
+      border: 2px solid var(--red);
       color: var(--red);
-      font-weight: 800;
-      font-size: .8rem;
-      padding: 4px 14px;
+      font-weight: 900;
+      font-size: .92rem;
+      padding: 6px 16px;
       letter-spacing: .04em;
-      border-radius: 4px;
+      border-radius: 6px;
     }
     .cta-block { padding: 8px 18px 28px; }
 
     /* ── Results ── */
-    .shot-grid { display: grid; gap: 14px; }
+    .shot-grid { display: grid; gap: 18px; }
     .shot {
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .shot:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lift);
     }
     .shot img { width: 100%; height: auto; }
     .shot-note {
-      margin: 12px 0 0;
+      margin: 14px 0 0;
       text-align: center;
-      font-size: .72rem;
+      font-size: .78rem;
+      font-weight: 700;
       color: var(--muted);
     }
 
@@ -297,10 +355,10 @@
       justify-content: center;
       gap: 10px;
       margin: 0 0 22px;
-      font-size: 1.38rem;
+      font-size: 1.55rem;
       font-weight: 900;
       line-height: 1.35;
-      letter-spacing: -.01em;
+      letter-spacing: -.02em;
     }
     .voice-title::before,
     .voice-title::after {
@@ -321,8 +379,8 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      margin: -8px 0 18px;
-      font-size: .72rem;
+      margin: -8px 0 20px;
+      font-size: .8rem;
       font-weight: 700;
       color: var(--grey);
       letter-spacing: .04em;
@@ -334,8 +392,8 @@
       background: var(--white);
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 18px;
-      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
     }
 
     .g-review__head {
@@ -381,8 +439,8 @@
     }
     .g-review__name {
       margin: 0;
-      font-size: .95rem;
-      font-weight: 800;
+      font-size: 1.05rem;
+      font-weight: 900;
       color: var(--black);
       letter-spacing: .02em;
     }
@@ -418,9 +476,9 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: .88rem;
-      font-weight: 700;
-      line-height: 1.45;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.5;
       color: var(--ink);
     }
     .g-review__check {
@@ -444,40 +502,46 @@
       color: var(--red);
       font-weight: 900;
     }
-    .reviews .g-review:nth-child(2) { }
 
     @media (min-width: 720px) {
-      .voice-title { font-size: 1.5rem; }
-      .g-review { padding: 20px 22px 18px; }
+      .voice-title { font-size: 1.65rem; }
+      .g-review { padding: 22px; }
     }
 
     /* ── 3つの理由：左テキスト / 右画像 ── */
-    .reasons { display: grid; gap: 12px; }
+    .reasons { display: grid; gap: 16px; }
     .reason {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
       align-items: stretch;
       background: var(--white);
       border: 1px solid var(--line);
-      border-left: 4px solid var(--red);
-      border-radius: 0 8px 8px 0;
+      border-left: 5px solid var(--red);
+      border-radius: 0 10px 10px 0;
       overflow: hidden;
-      min-height: 132px;
+      min-height: 140px;
+      box-shadow: var(--shadow-card);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .reason:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lift);
     }
     .reason-body {
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 10px;
-      padding: 12px 10px 12px 12px;
+      gap: 12px;
+      padding: 16px 12px 16px 14px;
       min-width: 0;
     }
     .reason-badge {
-      width: 46px;
-      height: 46px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: var(--red);
       color: var(--white);
+      box-shadow: 0 4px 12px rgba(194,22,50,.25);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -486,21 +550,21 @@
       flex-shrink: 0;
     }
     .reason-badge small {
-      font-size: .58rem;
-      font-weight: 700;
+      font-size: .62rem;
+      font-weight: 800;
       letter-spacing: .04em;
     }
     .reason-badge strong {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 900;
       margin-top: 1px;
     }
     .reason-copy { min-width: 0; }
     .reason h3 {
-      margin: 0 0 4px;
-      font-size: .95rem;
-      font-weight: 800;
-      line-height: 1.3;
+      margin: 0 0 6px;
+      font-size: 1.08rem;
+      font-weight: 900;
+      line-height: 1.35;
     }
     .reason h3 em {
       font-style: normal;
@@ -508,29 +572,33 @@
     }
     .reason p {
       margin: 0;
-      font-size: .78rem;
+      font-size: .88rem;
+      font-weight: 700;
       color: var(--grey);
-      line-height: 1.45;
+      line-height: 1.5;
     }
     .reason-photo {
       min-height: 100%;
       overflow: hidden;
-      background: #111;
+      background: #f5f5f5;
+      box-shadow: inset 8px 0 16px rgba(0,0,0,.04);
     }
     .reason-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center center;
+      transition: transform .4s ease;
     }
+    .reason:hover .reason-photo img { transform: scale(1.04); }
 
     @media (max-width: 420px) {
       .reason {
         grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
-        min-height: 120px;
+        min-height: 128px;
       }
-      .reason h3 { font-size: .86rem; }
-      .reason p { font-size: .72rem; }
+      .reason h3 { font-size: .98rem; }
+      .reason p { font-size: .82rem; }
     }
 
     /* ── 施設・マップ・トレーナー ── */
@@ -538,13 +606,15 @@
     .map-box {
       background: var(--white);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: var(--shadow-card);
     }
-    .map-box img { width: 100%; height: auto; }
+    .map-box img { width: 100%; height: auto; border-radius: 6px; }
     .map-note {
-      margin: 10px 0 0;
-      font-size: .76rem;
+      margin: 12px 0 0;
+      font-size: .82rem;
+      font-weight: 700;
       color: var(--muted);
       text-align: center;
     }
@@ -557,7 +627,7 @@
       border-top: 2px solid var(--red);
     }
     .footer-cta .sec-label { color: var(--muted); }
-    .footer-cta .sec-title { color: var(--white); margin-bottom: 8px; }
+    .footer-cta .sec-title { color: var(--white); margin-bottom: 10px; font-size: 1.55rem; font-weight: 900; }
     .footer-cta .sec-title em { color: var(--red); -webkit-text-fill-color: var(--red); background: none; filter: none; }
     .footer-cta .price-was,
     .footer-cta .price-tax { color: #aaa; text-align: center; }
@@ -573,26 +643,44 @@
     .footer-note {
       margin: 18px 0 0;
       text-align: center;
-      font-size: .7rem;
+      font-size: .75rem;
+      font-weight: 700;
       color: #777;
       line-height: 1.5;
     }
 
     @media (max-width: 520px) {
-      .hero-top {
+      .hero-banner {
         grid-template-columns: 1fr;
-        gap: 18px;
+        min-height: auto;
       }
-      .hero-catch { font-size: 1.32rem; }
-      .price-main { font-size: 2.6rem; }
+      .hero-copy { padding: 24px 18px 16px; }
+      .hero-line--1 { font-size: 1rem; }
+      .hero-line--2 { font-size: 1.55rem; }
+      .hero-line--3 { font-size: 1.38rem; }
+      .hero-visual {
+        min-height: 200px;
+      }
+      .hero-visual::after {
+        background: linear-gradient(
+          to bottom,
+          transparent 60%,
+          var(--white) 100%
+        );
+      }
+      .price-main { font-size: 2.8rem; }
     }
 
     @media (min-width: 720px) {
-      .sec { padding: 44px 24px; }
-      .hero { padding: 32px 24px 34px; }
-      .hero-catch { font-size: 1.48rem; }
-      .price-main { font-size: 3rem; }
-      .sec-title { font-size: 1.4rem; }
+      .sec { padding: 48px 24px; }
+      .hero-banner { min-height: 300px; }
+      .hero-copy { padding: 36px 20px 36px 24px; }
+      .hero-line--1 { font-size: 1.15rem; }
+      .hero-line--2 { font-size: 2rem; }
+      .hero-line--3 { font-size: 1.78rem; }
+      .feature-grid { padding: 22px 24px 28px; }
+      .price-main { font-size: 3.5rem; }
+      .sec-title { font-size: 1.72rem; }
       .price-wrap,
       .cta-block { padding-left: 24px; padding-right: 24px; }
     }
@@ -606,34 +694,27 @@
     </div>
 
     <header class="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <span class="hero-orb hero-orb--1"></span>
-        <span class="hero-orb hero-orb--2"></span>
-      </div>
-      <div class="hero-top">
-        <div class="hero-copy reveal">
-          <p class="hero-brand">JOYFIT<span>24</span>　麻布十番</p>
+      <div class="hero-banner reveal">
+        <div class="hero-copy">
           <h1 class="hero-catch">
-            ジム初心者でも安心。<br />
-            <em>完全個室で30分無料サポート</em><br />
-            24時間、自分のペースで。
+            <span class="hero-line hero-line--1">ジムが初めてでも<em>安心！</em></span>
+            <span class="hero-line hero-line--2">完全個室で</span>
+            <span class="hero-line hero-line--3">30分無料サポート</span>
           </h1>
         </div>
-        <div class="hero-visual reveal reveal-d2">
-          <div class="hero-photo-frame">
-            <img
-              src="assets/azabu-juban/hero.png"
-              alt="JOYFITトレーナーによるサポート風景"
-              width="1200"
-              height="750"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </div>
+        <div class="hero-visual">
+          <img
+            src="assets/azabu-juban/hero.png"
+            alt="JOYFITトレーナーによる完全個室サポート"
+            width="1200"
+            height="750"
+            fetchpriority="high"
+            decoding="async"
+          />
         </div>
       </div>
 
-      <div class="feature-grid reveal reveal-d3">
+      <div class="feature-grid reveal reveal-d2">
         <div class="feature"><div class="feature-ico">0円</div>入会金0円</div>
         <div class="feature"><div class="feature-ico">24h</div>24時間営業</div>
         <div class="feature"><div class="feature-ico">3分</div>駅徒歩3分</div>
@@ -706,7 +787,7 @@
         Google クチコミ
       </p>
       <div class="reviews">
-        <article class="g-review scroll-reveal">
+        <article class="g-review">
           <div class="g-review__head">
             <div class="g-review__avatar g-review__avatar--kt" aria-hidden="true">🐿</div>
             <div class="g-review__meta">
@@ -747,7 +828,7 @@
           </ul>
         </article>
 
-        <article class="g-review scroll-reveal">
+        <article class="g-review">
           <div class="g-review__head">
             <div class="g-review__avatar g-review__avatar--ch" aria-hidden="true">C</div>
             <div class="g-review__meta">
@@ -953,45 +1034,5 @@
     </footer>
 
   </div>
-
-  <script>
-    (function () {
-      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduced) return;
-
-      document.querySelectorAll(".sec, .reason, .shot, .g-review, .price-box, .panel, .map-box").forEach(function (el) {
-        el.classList.add("scroll-reveal");
-      });
-
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
-            io.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-
-      document.querySelectorAll(".scroll-reveal").forEach(function (el) { io.observe(el); });
-
-      var frame = document.querySelector(".hero-photo-frame");
-      var heroVisual = document.querySelector(".hero-visual");
-      if (frame && heroVisual && window.matchMedia("(pointer: fine)").matches) {
-        heroVisual.addEventListener("mousemove", function (e) {
-          var r = heroVisual.getBoundingClientRect();
-          var x = (e.clientX - r.left) / r.width - 0.5;
-          var y = (e.clientY - r.top) / r.height - 0.5;
-          frame.style.animation = "none";
-          frame.style.transform = "perspective(1000px) rotateY(" + (x * 16) + "deg) rotateX(" + (-y * 14) + "deg) translateY(-10px)";
-          frame.style.boxShadow = "0 32px 56px rgba(0,0,0,.35), 0 0 32px rgba(194,22,50,.5)";
-        });
-        heroVisual.addEventListener("mouseleave", function () {
-          frame.style.transform = "";
-          frame.style.boxShadow = "";
-          frame.style.animation = "";
-        });
-      }
-    })();
-  </script>
 </body>
 </html>

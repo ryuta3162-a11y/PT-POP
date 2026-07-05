@@ -9,19 +9,16 @@
     :root {
       --red: #c21632;
       --red-dark: #9a1128;
-      --red-light: #e8354f;
       --black: #0a0a0a;
       --ink: #141414;
       --grey: #5a5a5a;
       --muted: #888;
-      --line: #e0e0e0;
-      --bg: #f0f0f0;
-      --bg-soft: #fafafa;
+      --line: #e8e8e8;
       --white: #fff;
       --accent: var(--red);
       --max: 720px;
-      --shadow-3d: 0 18px 36px rgba(0,0,0,.14), 0 6px 12px rgba(194,22,50,.1);
-      --shadow-lift: 0 28px 48px rgba(0,0,0,.18), 0 10px 20px rgba(194,22,50,.14);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 20px rgba(0,0,0,.07);
     }
 
     * { box-sizing: border-box; }
@@ -30,7 +27,7 @@
       margin: 0;
       font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
       color: var(--ink);
-      background: linear-gradient(165deg, #3a3a3a 0%, #1a1a1a 50%, #2d2d2d 100%);
+      background: var(--white);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
@@ -49,55 +46,42 @@
       max-width: var(--max);
       margin: 0 auto;
       background: var(--white);
-      box-shadow: 0 0 60px rgba(0,0,0,.35);
       overflow: hidden;
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes heroFloat {
-      0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
-      50% { transform: translateY(-8px) rotateX(2deg) rotateY(-1deg); }
-    }
-    @keyframes shimmer {
-      0% { background-position: 200% center; }
-      100% { background-position: -200% center; }
-    }
-    @keyframes pulseRed {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .75; }
-    }
 
-    .reveal {
-      animation: fadeUp .7s ease both;
-    }
-    .reveal-d1 { animation-delay: .08s; }
-    .reveal-d2 { animation-delay: .16s; }
-    .reveal-d3 { animation-delay: .24s; }
+    .reveal { animation: fadeUp .5s ease both; }
+    .reveal-d1 { animation-delay: .06s; }
+    .reveal-d2 { animation-delay: .12s; }
+    .reveal-d3 { animation-delay: .18s; }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal, .hero-photo-frame, .feature-ico { animation: none !important; }
+      .reveal { animation: none; }
     }
 
     .sec { padding: 36px 18px; }
-    .sec--bg { background: var(--bg); }
+    .sec--bg { background: var(--white); }
+    .sec + .sec { border-top: 1px solid var(--line); }
     .sec-label {
       margin: 0 0 6px;
       text-align: center;
-      font-size: .7rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .2em;
+      letter-spacing: .22em;
       color: var(--muted);
       text-transform: uppercase;
     }
     .sec-title {
       margin: 0 0 20px;
-      font-size: 1.28rem;
+      font-size: 1.32rem;
       font-weight: 800;
       text-align: center;
       line-height: 1.4;
+      letter-spacing: -.01em;
     }
     .sec-title em {
       font-style: normal;
@@ -107,13 +91,10 @@
     .panel {
       background: var(--white);
       border: 1px solid var(--line);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,.04);
     }
-    .panel img {
-      width: 100%;
-      height: auto;
-    }
+    .panel img { width: 100%; height: auto; }
 
     .btn {
       display: flex;
@@ -122,45 +103,41 @@
       justify-content: center;
       width: 100%;
       min-height: 54px;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 1rem;
       font-weight: 800;
       text-align: center;
       line-height: 1.25;
       padding: 12px 16px;
       border: 1.5px solid transparent;
+      transition: opacity .15s;
     }
     .btn small {
       font-size: .74rem;
       font-weight: 600;
       margin-top: 2px;
-      opacity: .88;
+      opacity: .85;
     }
     .btn-primary {
-      background: linear-gradient(145deg, #1a1a1a 0%, var(--black) 100%);
+      background: var(--black);
       color: var(--white);
-      box-shadow: 0 8px 20px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.12);
-      transition: transform .2s, box-shadow .2s;
     }
-    .btn-primary:active { transform: translateY(2px); box-shadow: 0 4px 10px rgba(0,0,0,.2); }
+    .btn-primary:active { opacity: .85; }
     .btn-secondary {
       background: var(--white);
       color: var(--black);
       border-color: var(--black);
-      box-shadow: 0 6px 16px rgba(0,0,0,.08);
     }
     .btn-accent {
-      background: linear-gradient(135deg, var(--red-light) 0%, var(--red) 50%, var(--red-dark) 100%);
+      background: var(--red);
       color: var(--white);
-      box-shadow: 0 10px 24px rgba(194,22,50,.35), inset 0 1px 0 rgba(255,255,255,.2);
-      transition: transform .2s, box-shadow .2s;
     }
-    .btn-accent:active { transform: translateY(2px); box-shadow: 0 5px 14px rgba(194,22,50,.3); }
+    .btn-accent:active { opacity: .88; }
     .btn-row { display: grid; gap: 10px; margin-top: 14px; }
 
     /* ── 緊急帯 ── */
     .urgent {
-      background: linear-gradient(90deg, var(--black) 0%, #1c1c1c 50%, var(--black) 100%);
+      background: var(--black);
       color: var(--white);
       text-align: center;
       padding: 11px 14px;
@@ -169,85 +146,47 @@
       letter-spacing: .04em;
       border-bottom: 2px solid var(--red);
     }
-    .urgent strong {
-      color: var(--red-light);
-      animation: pulseRed 2.2s ease-in-out infinite;
-    }
+    .urgent strong { color: var(--red); font-weight: 800; }
 
-    /* ── ヒーロー：左キャッチ / 右画像 ── */
+    /* ── ヒーロー ── */
     .hero {
-      position: relative;
-      padding: 22px 18px 26px;
-      background: linear-gradient(180deg, var(--white) 0%, var(--bg-soft) 100%);
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 0 40%;
-      background: linear-gradient(135deg, transparent 0%, rgba(194,22,50,.05) 100%);
-      pointer-events: none;
+      padding: 28px 18px 30px;
+      background: var(--white);
     }
     .hero-top {
-      position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
-      gap: 14px;
+      gap: 16px;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
     .hero-copy { min-width: 0; }
     .hero-brand {
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       font-size: .88rem;
       font-weight: 800;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
+      color: var(--ink);
     }
     .hero-brand span { color: var(--accent); }
     .hero-catch {
       margin: 0;
-      font-size: 1.15rem;
+      font-size: 1.22rem;
       font-weight: 800;
-      line-height: 1.45;
+      line-height: 1.5;
+      color: var(--ink);
     }
     .hero-catch em {
       font-style: normal;
       border-bottom: 3px solid var(--accent);
       padding-bottom: 1px;
     }
-    .hero-visual {
-      perspective: 900px;
-      min-width: 0;
-    }
+    .hero-visual { min-width: 0; }
     .hero-photo-frame {
-      position: relative;
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
-      background: var(--black);
-      box-shadow: var(--shadow-3d);
-      animation: heroFloat 5.5s ease-in-out infinite;
-      transform-style: preserve-3d;
-    }
-    .hero-photo-frame::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 10px;
-      padding: 2px;
-      background: linear-gradient(135deg, var(--red-light), var(--red-dark));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .hero-photo-frame::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 55%, rgba(10,10,10,.3));
-      pointer-events: none;
-      z-index: 1;
+      background: var(--line);
+      box-shadow: var(--shadow-md);
     }
     .hero-photo-frame img {
       width: 100%;
@@ -257,7 +196,6 @@
     }
 
     .feature-grid {
-      position: relative;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
@@ -268,42 +206,44 @@
       font-weight: 700;
       line-height: 1.35;
       color: var(--grey);
+      padding: 10px 4px;
     }
     .feature-ico {
       width: 40px;
       height: 40px;
       margin: 0 auto 6px;
-      border-radius: 8px;
-      border: 1.5px solid var(--black);
+      border-radius: 6px;
+      border: 1.5px solid var(--line);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: .64rem;
-      font-weight: 900;
-      color: var(--black);
-      background: linear-gradient(145deg, var(--white) 0%, #e8e8e8 100%);
-      box-shadow: 0 4px 0 #bbb, 0 8px 16px rgba(0,0,0,.1);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .feature:hover .feature-ico {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 0 #bbb, 0 12px 20px rgba(194,22,50,.15);
+      font-weight: 800;
+      color: var(--red);
+      background: var(--white);
     }
 
     /* ── 料金 ── */
     .price-wrap { padding: 0 18px 6px; }
-    .price-box { border: 1.5px solid var(--black); }
+    .price-box {
+      border: 1.5px solid var(--black);
+      border-radius: 8px;
+      overflow: hidden;
+    }
     .price-head {
-      background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 55%, var(--red-light) 100%);
+      background: var(--red);
       color: var(--white);
       text-align: center;
-      padding: 10px;
-      font-weight: 700;
-      font-size: .9rem;
+      padding: 12px;
+      font-weight: 800;
+      font-size: .92rem;
       letter-spacing: .1em;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
     }
-    .price-body { padding: 18px 14px 20px; text-align: center; }
+    .price-body {
+      padding: 20px 14px 22px;
+      text-align: center;
+      background: var(--white);
+    }
     .price-was {
       margin: 0;
       color: var(--muted);
@@ -312,7 +252,7 @@
     }
     .price-main {
       margin: 4px 0 0;
-      font-size: 2.55rem;
+      font-size: 2.75rem;
       font-weight: 900;
       line-height: 1;
       letter-spacing: -.02em;
@@ -327,30 +267,21 @@
       color: var(--red);
       font-weight: 800;
       font-size: .8rem;
-      padding: 4px 12px;
+      padding: 4px 14px;
       letter-spacing: .04em;
-      background: linear-gradient(180deg, var(--white), var(--bg-soft));
-      box-shadow: 0 3px 8px rgba(194,22,50,.12);
+      border-radius: 4px;
     }
     .cta-block { padding: 8px 18px 28px; }
 
-    /* ── Results / 共有グラフィック ── */
+    /* ── Results ── */
     .shot-grid { display: grid; gap: 14px; }
     .shot {
       background: var(--white);
       border: 1px solid var(--line);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: var(--shadow-3d);
-      transition: transform .25s ease, box-shadow .25s ease;
     }
-    .shot:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lift);
-    }
-    .shot img {
-      width: 100%;
-      height: auto;
-    }
+    .shot img { width: 100%; height: auto; }
     .shot-note {
       margin: 12px 0 0;
       text-align: center;
@@ -358,21 +289,166 @@
       color: var(--muted);
     }
 
-    /* ── 口コミ（HTML） ── */
-    .reviews { display: grid; gap: 10px; }
-    .review {
-      border: 1px solid var(--line);
-      padding: 14px;
-      background: var(--white);
+    /* ── Google口コミ ── */
+    .voice-sec { padding-top: 40px; padding-bottom: 40px; }
+    .voice-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      font-size: 1.38rem;
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -.01em;
     }
-    .stars { letter-spacing: 2px; font-size: .85rem; }
-    .review p { margin: 8px 0 0; font-size: .88rem; color: #333; }
-    .review-name {
-      margin: 8px 0 0;
-      font-size: .74rem;
-      color: var(--muted);
+    .voice-title::before,
+    .voice-title::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .voice-title::after {
+      width: 6px;
+      height: 6px;
+      opacity: .6;
+    }
+    .voice-google-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: -8px 0 18px;
+      font-size: .72rem;
       font-weight: 700;
-      text-align: right;
+      color: var(--grey);
+      letter-spacing: .04em;
+    }
+    .voice-google-badge svg { flex-shrink: 0; }
+
+    .reviews { display: grid; gap: 14px; }
+    .g-review {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .g-review__head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .g-review__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover;
+      border: 2px solid #f1f3f4;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    }
+    .g-review__avatar--kt {
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    .g-review__avatar--ch {
+      background: #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--grey);
+      letter-spacing: -.02em;
+    }
+    .g-review__meta { flex: 1; min-width: 0; }
+    .g-review__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .g-review__name {
+      margin: 0;
+      font-size: .95rem;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: .02em;
+    }
+    .g-review__stars {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      flex-shrink: 0;
+    }
+    .g-review__stars svg {
+      width: 16px;
+      height: 16px;
+    }
+    .g-review__source {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 4px;
+      font-size: .68rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .g-review__source svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    .g-review__points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+    .g-review__points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .88rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .g-review__check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .g-review__check svg {
+      width: 11px;
+      height: 11px;
+      fill: var(--white);
+    }
+    .g-review__points em {
+      font-style: normal;
+      color: var(--red);
+      font-weight: 900;
+    }
+    .reviews .g-review:nth-child(2) { }
+
+    @media (min-width: 720px) {
+      .voice-title { font-size: 1.5rem; }
+      .g-review { padding: 20px 22px 18px; }
     }
 
     /* ── 3つの理由：左テキスト / 右画像 ── */
@@ -383,6 +459,8 @@
       align-items: stretch;
       background: var(--white);
       border: 1px solid var(--line);
+      border-left: 4px solid var(--red);
+      border-radius: 0 8px 8px 0;
       overflow: hidden;
       min-height: 132px;
     }
@@ -398,9 +476,8 @@
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: linear-gradient(145deg, var(--red-light), var(--red-dark));
+      background: var(--red);
       color: var(--white);
-      box-shadow: 0 4px 14px rgba(194,22,50,.35);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -461,6 +538,7 @@
     .map-box {
       background: var(--white);
       border: 1px solid var(--line);
+      border-radius: 8px;
       padding: 10px;
     }
     .map-box img { width: 100%; height: auto; }
@@ -473,14 +551,14 @@
 
     /* ── フッター ── */
     .footer-cta {
-      background: linear-gradient(180deg, #141414 0%, var(--black) 100%);
+      background: var(--black);
       color: var(--white);
       padding: 32px 18px 36px;
-      border-top: 3px solid var(--red);
+      border-top: 2px solid var(--red);
     }
     .footer-cta .sec-label { color: var(--muted); }
     .footer-cta .sec-title { color: var(--white); margin-bottom: 8px; }
-    .footer-cta .sec-title em { color: var(--red-light); }
+    .footer-cta .sec-title em { color: var(--red); -webkit-text-fill-color: var(--red); background: none; filter: none; }
     .footer-cta .price-was,
     .footer-cta .price-tax { color: #aaa; text-align: center; }
     .footer-cta .btn-primary {
@@ -503,16 +581,18 @@
     @media (max-width: 520px) {
       .hero-top {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 18px;
       }
-      .hero-catch { font-size: 1.28rem; }
+      .hero-catch { font-size: 1.32rem; }
+      .price-main { font-size: 2.6rem; }
     }
 
     @media (min-width: 720px) {
       .sec { padding: 44px 24px; }
-      .hero { padding: 28px 24px 30px; }
-      .hero-catch { font-size: 1.42rem; }
-      .price-main { font-size: 2.85rem; }
+      .hero { padding: 32px 24px 34px; }
+      .hero-catch { font-size: 1.48rem; }
+      .price-main { font-size: 3rem; }
+      .sec-title { font-size: 1.4rem; }
       .price-wrap,
       .cta-block { padding-left: 24px; padding-right: 24px; }
     }
@@ -526,6 +606,10 @@
     </div>
 
     <header class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="hero-orb hero-orb--1"></span>
+        <span class="hero-orb hero-orb--2"></span>
+      </div>
       <div class="hero-top">
         <div class="hero-copy reveal">
           <p class="hero-brand">JOYFIT<span>24</span>　麻布十番</p>
@@ -610,19 +694,98 @@
       <p class="shot-note">※効果には個人差があります</p>
     </section>
 
-    <section class="sec">
-      <p class="sec-label">Voice</p>
-      <h2 class="sec-title">お客様の声</h2>
+    <section class="sec voice-sec">
+      <h2 class="voice-title">実際に通っている方の声</h2>
+      <p class="voice-google-badge" aria-label="Googleクチコミ">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Google クチコミ
+      </p>
       <div class="reviews">
-        <article class="review">
-          <div class="stars" aria-label="5つ星">★★★★★</div>
-          <p>施設がきれいで、トレーナーの方も丁寧に教えてくれるので初心者でも通いやすいです。</p>
-          <p class="review-name">K.U. 様</p>
+        <article class="g-review scroll-reveal">
+          <div class="g-review__head">
+            <div class="g-review__avatar g-review__avatar--kt" aria-hidden="true">🐿</div>
+            <div class="g-review__meta">
+              <div class="g-review__top">
+                <p class="g-review__name">KT様</p>
+                <div class="g-review__stars" aria-label="5つ星">
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+              </div>
+              <p class="g-review__source">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google クチコミ · ローカルガイド
+              </p>
+            </div>
+          </div>
+          <ul class="g-review__points">
+            <li>
+              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              運動が<em>習慣</em>に！
+            </li>
+            <li>
+              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              完全に<em>マンツーマン</em>！
+            </li>
+            <li>
+              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              食事指導も<em>安心</em>！
+            </li>
+          </ul>
         </article>
-        <article class="review">
-          <div class="stars" aria-label="5つ星">★★★★★</div>
-          <p>個室サポートがあるので人目を気にせず相談できました。続けやすい環境です。</p>
-          <p class="review-name">Christina N. 様</p>
+
+        <article class="g-review scroll-reveal">
+          <div class="g-review__head">
+            <div class="g-review__avatar g-review__avatar--ch" aria-hidden="true">C</div>
+            <div class="g-review__meta">
+              <div class="g-review__top">
+                <p class="g-review__name">Christina様</p>
+                <div class="g-review__stars" aria-label="5つ星">
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24"><path fill="#FBBC04" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+              </div>
+              <p class="g-review__source">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google クチコミ · ローカルガイド
+              </p>
+            </div>
+          </div>
+          <ul class="g-review__points">
+            <li>
+              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              完全個室で<em>人目を気にせず</em>！
+            </li>
+            <li>
+              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              トレーナーが<em>優しくて安心</em>！
+            </li>
+            <li>
+              <span class="g-review__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+              短期間でも<em>しっかり効果</em>！
+            </li>
+          </ul>
         </article>
       </div>
     </section>
@@ -790,5 +953,45 @@
     </footer>
 
   </div>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) return;
+
+      document.querySelectorAll(".sec, .reason, .shot, .g-review, .price-box, .panel, .map-box").forEach(function (el) {
+        el.classList.add("scroll-reveal");
+      });
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+      document.querySelectorAll(".scroll-reveal").forEach(function (el) { io.observe(el); });
+
+      var frame = document.querySelector(".hero-photo-frame");
+      var heroVisual = document.querySelector(".hero-visual");
+      if (frame && heroVisual && window.matchMedia("(pointer: fine)").matches) {
+        heroVisual.addEventListener("mousemove", function (e) {
+          var r = heroVisual.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          frame.style.animation = "none";
+          frame.style.transform = "perspective(1000px) rotateY(" + (x * 16) + "deg) rotateX(" + (-y * 14) + "deg) translateY(-10px)";
+          frame.style.boxShadow = "0 32px 56px rgba(0,0,0,.35), 0 0 32px rgba(194,22,50,.5)";
+        });
+        heroVisual.addEventListener("mouseleave", function () {
+          frame.style.transform = "";
+          frame.style.boxShadow = "";
+          frame.style.animation = "";
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
